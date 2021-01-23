@@ -82,6 +82,10 @@ class Settings(BaseSettings):
     FIRST_SUPERUSER_PASSWORD: str
     USERS_OPEN_REGISTRATION: bool = False
 
+    # FRAPI
+    FRAPI_URL: Optional[str] = "https://api.fuelrats.com/"
+    FRAPI_TOKEN: Optional[str] = "2NdpZONC8lmNqkyD2AzmeA12pqz38VfA"
+
     class Config:
         case_sensitive = True
 

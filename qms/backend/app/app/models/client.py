@@ -13,3 +13,4 @@ class Client(Base):
     platform = Column(String)
     locale = Column(String)
     o2_status = Column(Boolean)
+    queue = relationship("Queue", back_populates='client')

@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-import emails
+import emails, requests, urllib
 from emails.template import JinjaTemplate
 from jose import jwt
 
@@ -103,4 +103,17 @@ def verify_password_reset_token(token: str) -> Optional[str]:
         decoded_token = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
         return decoded_token["email"]
     except jwt.JWTError:
+        return None
+
+
+def api_query(endpoint: str, filter: str, query: str) -> Optional[str]:
+    try:
+        query = requests.get(url=urllib.parse.urljoin(settings.FRAPI_URL, f"{endpoint}"),
+                             params={f'filter[{filter}]': f'{query}'},
+                             headers={'Authorization': f'Bearer {settings.FRAPI_TOKEN}'})
+        if query.status_code != 200:
+            query.raise_for_status()
+        return query.json()
+    except Exception as r:
+        print(f"Exception in api_query: {r}")
         return None

@@ -262,7 +262,7 @@ $ alembic upgrade head
 If you don't want to use migrations at all, uncomment the line in the file at `./backend/app/app/db/init_db.py` with:
 
 ```python
-Base.metadata.create_all(bind=engine)
+# Base.metadata.create_all(bind=engine)
 ```
 
 and comment the line in the file `prestart.sh` that contains:
