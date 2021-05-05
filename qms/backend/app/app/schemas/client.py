@@ -21,6 +21,7 @@ class ClientCreate(ClientBase):
     locale: str
     o2_status: bool
 
+
 # Properties to receive on item update
 class ClientUpdate(ClientBase):
     pass

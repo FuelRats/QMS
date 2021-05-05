@@ -1,8 +1,6 @@
-from typing import Any, List, Union
+from typing import Any, List
 
-from fastapi import APIRouter, Body, Depends, HTTPException, Response, status
-from fastapi.encoders import jsonable_encoder
-from pydantic.networks import EmailStr
+from fastapi import APIRouter, Depends, HTTPException, Response, status
 
 import datetime
 import uuid
@@ -11,8 +9,7 @@ from sqlalchemy.orm import Session
 
 from app import crud, models, schemas
 from app.api import deps
-from app.core.config import settings
-from app.utils import send_new_account_email
+
 from app.models.queue import Queue
 from app.models.config import Config
 from app.utils import api_query
@@ -49,6 +46,7 @@ def read_queue(
     queue = crud.queue.get_multi(db, skip=skip, limit=limit)
     return queue
 
+
 @router.get("/uuid/{uuid}", response_model=schemas.Queue)
 def get_queue_by_uuid(
     *,
@@ -63,6 +61,7 @@ def get_queue_by_uuid(
 
     return None
 
+
 @router.put("/uuid/{uuid}", response_model=schemas.Queue)
 def update_queue(
         *,
@@ -75,7 +74,7 @@ def update_queue(
     Update queue information.
     Accepts changes to pending or uuid fields.
     """
-    row = db.query(Queue).filter(Queue.uuid==uuid).one()
+    row = db.query(Queue).filter(Queue.uuid == uuid).one()
     if not row:
         raise HTTPException(status_code=404, detail="UUID not found")
     item = crud.queue.get(db=db, id=row.id)
@@ -83,6 +82,7 @@ def update_queue(
         raise HTTPException(status_code=404, detail="Item not found")
     item = crud.queue.update(db=db, db_obj=item, obj_in=queue_in)
     return item
+
 
 @router.delete("/uuid/{uuid}", response_model=schemas.Queue)
 def remove_queue(
@@ -123,7 +123,7 @@ def new_client(
         db: Session = Depends(deps.get_db),
         client_in: schemas.QueueCreate,
         response: Response
-)-> Any:
+) -> Any:
     """
     Announce a new client to the QMS, return queueing info if chat is full
     """
@@ -131,10 +131,13 @@ def new_client(
     print(api_query("rescues", "status", "open"))
     # Query API to get current client load.
     clients = 8
+    uid = uuid.uuid4()
     if clients > maxclients:
         # Queue and return.
         response.status_code = status.HTTP_201_CREATED
-        uid = uuid.uuid4()
-        return {'message': 'queued', 'arrival_time': datetime.datetime.utcnow().isoformat(), 'uuid': str(uid), 'client': client_in.client}
+        queue = crud.queue.create(db, obj_in=client_in)
+        return {'message': 'queued', 'arrival_time': datetime.datetime.utcnow().isoformat(), 'uuid': str(uid),
+                'client': queue}
     else:
-        return {'message': 'go_ahead', 'uuid': str(uid), 'arrival_time': datetime.datetime.utcnow().isoformat(), 'client': client_in.client}
+        return {'message': 'go_ahead', 'uuid': str(uid), 'arrival_time': datetime.datetime.utcnow().isoformat(),
+                'client': client_in.client}
