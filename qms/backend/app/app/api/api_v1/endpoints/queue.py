@@ -1,5 +1,6 @@
 from typing import Any, List
 
+from app.models import Client
 from fastapi import APIRouter, Depends, HTTPException, Response, status
 
 import datetime
@@ -34,9 +35,9 @@ def get_queue(
 
 @router.get("/", response_model=List[schemas.Queue])
 def read_queue(
-    db: Session = Depends(deps.get_db),
-    skip: int = 0,
-    limit: int = 100,
+        db: Session = Depends(deps.get_db),
+        skip: int = 0,
+        limit: int = 100,
 ) -> Any:
     """
     Retrieve queue.
@@ -49,11 +50,11 @@ def read_queue(
 
 @router.get("/uuid/{uuid}", response_model=schemas.Queue)
 def get_queue_by_uuid(
-    *,
-    db: Session = Depends(deps.get_db),
-    uuid: str,
-    skip: int = 0,
-    limit: int = 100,
+        *,
+        db: Session = Depends(deps.get_db),
+        uuid: str,
+        skip: int = 0,
+        limit: int = 100,
 ) -> Any:
     """
     Retrieve specific queued client by its UUID
@@ -93,7 +94,7 @@ def remove_queue(
     """
     Delete from queue by UUID
     """
-    row = db.query(Queue).filter(Queue.uuid==uuid).one()
+    row = db.query(Queue).filter(Queue.uuid == uuid).one()
     if not row:
         raise HTTPException(status_code=404, detail="UUID not found")
     item = crud.queue.remove(db=db, id=row.id)
@@ -109,7 +110,7 @@ def api_dequeue(
     """
     API convenience endpoint for dequeue.
     """
-    row = db.query(Queue).filter(Queue.uuid==uuid).one()
+    row = db.query(Queue).filter(Queue.uuid == uuid).one()
     if not row:
         raise HTTPException(status_code=404, detail="UUID not found")
     item = crud.queue.remove(db=db, id=row.id)
@@ -135,9 +136,9 @@ def new_client(
     if clients > maxclients:
         # Queue and return.
         response.status_code = status.HTTP_201_CREATED
-        queue = crud.queue.create(db, obj_in=client_in)
-        return {'message': 'queued', 'arrival_time': datetime.datetime.utcnow().isoformat(), 'uuid': str(uid),
-                'client': queue}
+        obj = client_in
+        queue = crud.queue.create(db, obj_in=obj)
+        return {'message': 'queued', 'client': queue, 'test': 'Foobar'}
     else:
         return {'message': 'go_ahead', 'uuid': str(uid), 'arrival_time': datetime.datetime.utcnow().isoformat(),
                 'client': client_in.client}

@@ -17,9 +17,6 @@ class QueueBase(BaseModel):
 
 # Properties to receive on item creation
 class QueueCreate(BaseModel):
-    # arrival_time: datetime
-    # pending: bool
-    # uuid: str
     client: Client
 
     class Config:
@@ -80,6 +77,7 @@ class NewClientNoQueue(NewClient):
                       example='aabbccdd-eeffgghh-123456')
     arrival_time: datetime = Field(None, title="ISO datetime for when the client was announced to QMS.")
     client: Client
+
 
 class UUIDOnly(BaseModel):
     uuid: str =Field(None, title="An UUID identifying the client's queue entry.",
