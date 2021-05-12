@@ -22,7 +22,9 @@ def get_config(
     """
     Get the current configuration settings
     """
+
     pass
+
 
 @router.put("/", response_model=List[schemas.Config])
 def set_config(
@@ -33,4 +35,5 @@ def set_config(
     """
     Sets configuration options.
     """
+
     pass

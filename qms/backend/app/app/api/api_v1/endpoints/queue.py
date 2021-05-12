@@ -59,8 +59,13 @@ def get_queue_by_uuid(
     """
     Retrieve specific queued client by its UUID
     """
-
-    return None
+    row = db.query(Queue).filter(Queue.uuid == uuid).one()
+    if not row:
+        raise HTTPException(status_code=404, detail="UUID not found")
+    item = crud.queue.get(db=db, id=row.id)
+    if not item:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return item
 
 
 @router.put("/uuid/{uuid}", response_model=schemas.Queue)
@@ -129,16 +134,17 @@ def new_client(
     Announce a new client to the QMS, return queueing info if chat is full
     """
     maxclients = db.query(Config).first().max_active_clients
-    print(api_query("rescues", "status", "open"))
+    # clients = api_query("rescues", "status", "open")['meta']['total']
     # Query API to get current client load.
     clients = 8
     uid = uuid.uuid4()
     if clients > maxclients:
         # Queue and return.
         response.status_code = status.HTTP_201_CREATED
-        obj = client_in
-        queue = crud.queue.create(db, obj_in=obj)
-        return {'message': 'queued', 'client': queue, 'test': 'Foobar'}
+        queue = crud.queue.create(db, obj_in=client_in)
+        res = {'message': 'queued', 'uuid': queue.uuid, 'arrival_time': queue.arrival_time,
+               'pending': queue.pending, 'client': queue.client}
+        return res
     else:
         return {'message': 'go_ahead', 'uuid': str(uid), 'arrival_time': datetime.datetime.utcnow().isoformat(),
                 'client': client_in.client}

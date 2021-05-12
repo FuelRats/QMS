@@ -11,6 +11,7 @@ class ClientBase(BaseModel):
     platform: Optional[str] = Field(None, title="What platform the client is on")
     locale: Optional[str] = Field(None, title="Client's browser locale")
     o2_status: Optional[bool] = Field(False, title="Whether client is on emergency O2.")
+    odyssey: Optional[bool] = Field(False, title="Whether the client is playing Odyssey.")
 
 
 # Properties to receive on item creation
@@ -20,6 +21,7 @@ class ClientCreate(ClientBase):
     platform: str
     locale: str
     o2_status: bool
+    odyssey: bool
 
 
 # Properties to receive on item update
@@ -34,6 +36,7 @@ class ClientInDBBase(ClientBase):
     platform: str
     locale: str
     o2_status: bool
+    odyssey: bool
 
     class Config:
         orm_mode = True
@@ -46,6 +49,7 @@ class Client(ClientInDBBase):
     platform: Optional[str] = Field(None, title="What platform the client is on")
     locale: Optional[str] = Field(None, title="Client's browser locale")
     o2_status: Optional[bool] = Field(False, title="Whether client is on emergency O2.")
+    odyssey: Optional[bool] = Field(False, title="Whether the client is playing Odyssey.")
 
 
 # Properties stored in DB

@@ -10,6 +10,7 @@ class Client(Base):
     id = Column(Integer, primary_key=True, index=True)
     client_name = Column(String, index=True)
     client_system = Column(String)
+    odyssey = Column(Boolean)
     platform = Column(String)
     locale = Column(String)
     o2_status = Column(Boolean)

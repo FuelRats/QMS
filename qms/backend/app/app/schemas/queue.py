@@ -10,7 +10,6 @@ class QueueBase(BaseModel):
     pending: Optional[bool] = False
     client: Optional[Client] = None
     uuid: Optional[str] = None
-
     class Config:
         orm_mode = True
 

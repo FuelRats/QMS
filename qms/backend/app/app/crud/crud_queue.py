@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 from app.crud.base import CRUDBase
 from app.models.queue import Queue
 from app.models.client import Client
-from app.schemas.queue import QueueCreate, QueueUpdate, Queue as queueschema
+from app.schemas.queue import QueueCreate, QueueUpdate
 
 
 class CRUDQueue(CRUDBase[Queue, QueueCreate, QueueUpdate]):
@@ -39,12 +39,12 @@ class CRUDQueue(CRUDBase[Queue, QueueCreate, QueueUpdate]):
             .order_by(self.model.arrival_time)\
             .offset(skip)\
             .limit(limit)
-        queue = []
+        ret_queue = []
         for row in res:
             client = {'uuid': row[0].uuid, 'arrival_time': jsonable_encoder(row[0].arrival_time),
                       'pending': row[0].pending, 'client': jsonable_encoder(row[1])}
-            queue.append(client)
-        return queue
+            ret_queue.append(client)
+        return ret_queue
 
     def update_queue(
         self, db: Session, *, db_obj: Queue, obj_in: Union[QueueUpdate, Dict[str, Any]]

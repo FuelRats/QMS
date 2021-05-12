@@ -2,6 +2,7 @@ from typing import Optional
 from datetime import datetime
 from pydantic import BaseModel, Field
 
+
 # Shared properties
 class ConfigBase(BaseModel):
     max_active_clients: Optional[int] = Field(10, title="Maximum active cases in FRAPI before queueing begins")
@@ -20,12 +21,13 @@ class ConfigCreate(ConfigBase):
     prioritize_cr: bool
     prioritize_non_cr: bool
 
+
 # Properties to receive on item update
 class ConfigUpdate(ConfigBase):
-    max_active_clients: int
-    clear_on_restart: bool
-    prioritize_cr: bool
-    prioritize_non_cr: bool
+    max_active_clients: Optional[int]
+    clear_on_restart: Optional[bool]
+    prioritize_cr: Optional[bool]
+    prioritize_non_cr: Optional[bool]
 
 
 # Properties shared by models stored in DB
