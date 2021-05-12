@@ -19,7 +19,8 @@ class CRUDQueue(CRUDBase[Queue, QueueCreate, QueueUpdate]):
                             client_system=obj_in.client.client_system,
                             platform=obj_in.client.platform,
                             locale=obj_in.client.locale,
-                            o2_status=obj_in.client.o2_status)
+                            o2_status=obj_in.client.o2_status,
+                            odyssey=obj_in.client.odyssey)
         db.add(client_obj)
         db.commit()
         db.refresh(client_obj)
