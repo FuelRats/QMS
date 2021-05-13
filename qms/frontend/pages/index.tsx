@@ -163,7 +163,7 @@ export default function Home() {
       <Box my={2}>
         <Typography>CMDR Name</Typography>
         <TextField
-          placeholder="Surely Badger"
+          placeholder="Surly Badger"
           fullWidth
           value={name}
           onChange={handleNameChange}
