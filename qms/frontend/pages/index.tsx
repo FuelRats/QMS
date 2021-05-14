@@ -6,7 +6,6 @@ import React, {useState} from "react";
 import {Alert, AlertTitle} from "@material-ui/lab";
 import Image from "next/image";
 import {useRouter} from "next/router";
-import Logo from "../src/components/Logo";
 
 const QUEUE_CLIENT = gql`
   mutation QueueClient($input: QueueClientInput) {
