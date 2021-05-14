@@ -1,21 +1,12 @@
-import {
-  Box,
-  Button,
-  Container,
-  FormControlLabel,
-  Grid,
-  Radio,
-  RadioGroup,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import {Box, Button, Container, FormControlLabel, Radio, RadioGroup, TextField, Typography,} from "@material-ui/core";
 import SystemsSearch from "../src/components/SystemsSearch";
-import { gql } from "@apollo/client/core";
-import { useMutation } from "@apollo/client";
-import React, { useState } from "react";
-import { Alert, AlertTitle } from "@material-ui/lab";
+import {gql} from "@apollo/client/core";
+import {useMutation} from "@apollo/client";
+import React, {useState} from "react";
+import {Alert, AlertTitle} from "@material-ui/lab";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
+import Logo from "../src/components/Logo";
 
 const QUEUE_CLIENT = gql`
   mutation QueueClient($input: QueueClientInput) {
@@ -45,7 +36,7 @@ export default function Home() {
     platform.length &&
     name.length &&
     system.length &&
-    ((platform === "PC" && odyssey !== null) || platform !== "PC");
+    ((platform === "PC" && odyssey !== EmptyBoolean.EMPTY) || platform !== "PC");
 
   const handlePlatformChange = (event) => {
     setPlatform(event.target.value);
@@ -142,7 +133,7 @@ export default function Home() {
             <Alert severity="error">
               <AlertTitle>EXIT TO MAIN MENU</AlertTitle>
               Please exit to the main menu where you can see your ship in the
-              hanger <strong>immediately!</strong>
+              hangar <strong>immediately!</strong>
             </Alert>
           </Box>
           <Box my={2}>
