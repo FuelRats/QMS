@@ -114,7 +114,7 @@ def api_dequeue(
     """
     API convenience endpoint for dequeue.
     """
-    row = db.query(Queue).order_by(Queue.arrival_time.asc()).one()
+    row = db.query(Queue).order_by(Queue.arrival_time.asc()).first()
     if not row:
         raise HTTPException(status_code=404, detail="No valid cases to dequeue")
     return row
