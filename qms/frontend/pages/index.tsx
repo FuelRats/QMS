@@ -1,11 +1,20 @@
-import {Box, Button, Container, FormControlLabel, Radio, RadioGroup, TextField, Typography,} from "@material-ui/core";
+import {
+  Box,
+  Button,
+  Container,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import SystemsSearch from "../src/components/SystemsSearch";
-import {gql} from "@apollo/client/core";
-import {useMutation} from "@apollo/client";
-import React, {useState} from "react";
-import {Alert, AlertTitle} from "@material-ui/lab";
+import { gql } from "@apollo/client/core";
+import { useMutation } from "@apollo/client";
+import React, { useState } from "react";
+import { Alert, AlertTitle } from "@material-ui/lab";
 import Image from "next/image";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 
 const QUEUE_CLIENT = gql`
   mutation QueueClient($input: QueueClientInput) {
@@ -35,7 +44,8 @@ export default function Home() {
     platform.length &&
     name.length &&
     system.length &&
-    ((platform === "PC" && odyssey !== EmptyBoolean.EMPTY) || platform !== "PC");
+    ((platform === "PC" && odyssey !== EmptyBoolean.EMPTY) ||
+      platform !== "PC");
 
   const handlePlatformChange = (event) => {
     setPlatform(event.target.value);
@@ -96,15 +106,8 @@ export default function Home() {
 
   return (
     <Container maxWidth="xs">
-      <Box my={2} display="flex"
-           justifyContent="center"
-           alignItems="center">
-          <Image
-            src="/logo.svg"
-            layout="fixed"
-            width={250}
-            height={250}
-          />
+      <Box my={2} display="flex" justifyContent="center" alignItems="center">
+        <Image src="/logo.svg" layout="fixed" width={250} height={250} />
       </Box>
       <Typography component="h1" variant="h5">
         Do you see an &apos;oxygen depleted&apos; timer?
@@ -176,8 +179,16 @@ export default function Home() {
         <Box my={2}>
           <Typography>Are you playing on Odyssey?</Typography>
           <RadioGroup row value={odyssey} onChange={handleOdysseyChange}>
-            <FormControlLabel value={EmptyBoolean.TRUE} control={<Radio />} label="Yes" />
-            <FormControlLabel value={EmptyBoolean.FALSE} control={<Radio />} label="No" />
+            <FormControlLabel
+              value={EmptyBoolean.TRUE}
+              control={<Radio />}
+              label="Yes"
+            />
+            <FormControlLabel
+              value={EmptyBoolean.FALSE}
+              control={<Radio />}
+              label="No"
+            />
           </RadioGroup>
         </Box>
       )}

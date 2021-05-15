@@ -1,7 +1,7 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "react", "prettier", "flowtype"],
+  "plugins": ["@typescript-eslint", "react", "flowtype", "prettier"],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -12,11 +12,12 @@
   "rules": {
     "react/react-in-jsx-scope": 0,
     "react/prop-types": 0,
-    "@typescript-eslint/explicit-module-boundary-types": 0
+    "@typescript-eslint/explicit-module-boundary-types": 0,
+    "prettier/prettier": "error"
   },
   "extends": [
-    "react-app",
     "eslint:recommended",
+    "react-app",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",

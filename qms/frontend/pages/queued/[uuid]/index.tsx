@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Container, Grid } from "@material-ui/core";
+import { Box, Container, LinearProgress, Typography } from "@material-ui/core";
 import { gql } from "@apollo/client/core";
 import { useRouter } from "next/router";
 import { useQuery } from "@apollo/client";
@@ -15,6 +15,7 @@ const GET_QUEUED_CLIENT = gql`
       cmdr
       codeRed
       odyssey
+      position
     }
   }
 `;
@@ -43,17 +44,14 @@ export default function Index() {
     );
   }
 
+  if (loading || !data) {
+    return <Typography>Loading your rescue....</Typography>;
+  }
+
   return (
     <Container maxWidth="xs">
-      <Box my={2} display="flex"
-           justifyContent="center"
-           alignItems="center">
-        <Image
-            src="/logo.svg"
-            layout="fixed"
-            width={250}
-            height={250}
-        />
+      <Box my={2} display="flex" justifyContent="center" alignItems="center">
+        <Image src="/logo.svg" layout="fixed" width={250} height={250} />
       </Box>
       <Box my={2}>
         <Alert severity="info">
@@ -62,7 +60,8 @@ export default function Index() {
           </AlertTitle>
           It is currently extremely busy with rescue cases.
           <br />
-          This screen will refresh automatically and let you in once it&apos;s your turn.
+          This screen will refresh automatically and let you in once it&apos;s
+          your turn.
         </Alert>
       </Box>
       <Box my={2}>
@@ -70,16 +69,16 @@ export default function Index() {
           <AlertTitle>
             <strong>Exit to the main menu</strong>
           </AlertTitle>
-          To prevent burning too much fuel, please exit to the main menu while
-          you wait here.
-          <br />
-          <br />
-          Make sure you see your ship in the hangar!
+          To prevent burning unnecessary fuel, please exit to the main menu
+          where you can see your ship in the hangar while you wait here.
         </Alert>
       </Box>
-      <Grid container justify="center" alignItems="center">
-        <CircularProgress size={200} />
-      </Grid>
+      <Typography variant="h5" component="h3">
+        Your position in the queue: {data.queuedClient.position}
+      </Typography>
+      <Box width="100%" my={2}>
+        <LinearProgress />
+      </Box>
     </Container>
   );
 }

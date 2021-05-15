@@ -1,32 +1,39 @@
-import {gql} from "@apollo/client/core";
+import { gql } from "@apollo/client/core";
 
-export const typeDefs = gql`type Query {
+export const typeDefs = gql`
+  type Query {
     systems(filter: SystemsFilterInput!): [System]!
     queuedClient(uuid: String!): QueuedClient!
-}
-type Mutation {
+  }
+
+  type Mutation {
     queueClient(input: QueueClientInput): QueuedClient
-}
-input SystemsFilterInput {
+  }
+
+  input SystemsFilterInput {
     search: String!
-}
-type System {
+  }
+
+  type System {
     name: String
-}
-enum Platform {
+  }
+
+  enum Platform {
     PC
     PS4
     XB
-}
-input QueueClientInput {
+  }
+
+  input QueueClientInput {
     cmdr: String!
     system: String!
     platform: Platform!
     locale: String!
     codeRed: Boolean!
     odyssey: Boolean!
-}
-type QueuedClient {
+  }
+
+  type QueuedClient {
     message: String!
     arrivalTime: String!
     pending: Boolean!
@@ -37,5 +44,6 @@ type QueuedClient {
     system: String!
     cmdr: String!
     odyssey: Boolean!
-}
+    position: Int!
+  }
 `;
