@@ -117,6 +117,8 @@ def api_dequeue(
     row = db.query(Queue).filter(Queue.pending == False).order_by(Queue.arrival_time.asc()).first()
     if not row:
         raise HTTPException(status_code=404, detail="No valid cases to dequeue")
+    row.pending = True
+    db.commit()
     return row
 
 
