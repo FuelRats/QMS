@@ -13,7 +13,7 @@ from app.models.config import Config
 router = APIRouter()
 
 
-@router.get("/")
+@router.get("/", response_model=schemas.Config)
 def get_config(
         db: Session = Depends(deps.get_db),
         skip: int = 0,
@@ -22,11 +22,12 @@ def get_config(
     """
     Get the current configuration settings
     """
-
+    print("In get_config")
+    config = crud.config.get_config(db, skip=skip, limit=limit)
     pass
 
 
-@router.put("/", response_model=List[schemas.Config])
+@router.put("/", response_model=schemas.Config)
 def set_config(
     db: Session = Depends(deps.get_db),
     skip: int = 0,

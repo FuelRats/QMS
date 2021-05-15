@@ -106,20 +106,18 @@ def remove_queue(
     return item
 
 
-@router.delete("/dequeue/{uuid}", response_model=schemas.Queue)
+@router.post("/dequeue", response_model=schemas.Queue)
 def api_dequeue(
         *,
         db: Session = Depends(deps.get_db),
-        uuid: str
 ) -> Any:
     """
     API convenience endpoint for dequeue.
     """
-    row = db.query(Queue).filter(Queue.uuid == uuid).one()
+    row = db.query(Queue).order_by(Queue.arrivaltime.asc()).one()
     if not row:
-        raise HTTPException(status_code=404, detail="UUID not found")
-    item = crud.queue.remove(db=db, id=row.id)
-    return item
+        raise HTTPException(status_code=404, detail="No valid cases to dequeue")
+    return row
 
 
 @router.put("/newclient", response_model=schemas.NewClientNoQueue,
@@ -134,11 +132,10 @@ def new_client(
     Announce a new client to the QMS, return queueing info if chat is full
     """
     maxclients = db.query(Config).first().max_active_clients
-    # clients = api_query("rescues", "status", "open")['meta']['total']
-    # Query API to get current client load.
-    clients = 8
+    clients = api_query("rescues", "status", "open")['meta']['total']
+
     uid = uuid.uuid4()
-    if clients > maxclients:
+    if clients > maxclients or maxclients == 0:
         # Queue and return.
         response.status_code = status.HTTP_201_CREATED
         queue = crud.queue.create(db, obj_in=client_in)
