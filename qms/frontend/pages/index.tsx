@@ -150,8 +150,6 @@ export default function Home() {
           </Box>
         </>
       )}
-      <Typography>System Name</Typography>
-      <SystemsSearch onChange={handleSystemChange} />
 
       <Box my={2}>
         <Typography>CMDR Name</Typography>
@@ -163,6 +161,12 @@ export default function Home() {
           variant="outlined"
         />
       </Box>
+
+      <Box my={2}>
+        <Typography>System Name</Typography>
+        <SystemsSearch onChange={handleSystemChange} />
+      </Box>
+
       <Typography>Platform</Typography>
       <RadioGroup
         value={platform}
