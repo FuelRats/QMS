@@ -11,6 +11,7 @@ class QueueBase(BaseModel):
     in_progress: Optional[bool] = False
     client: Optional[Client] = None
     uuid: Optional[str] = None
+
     class Config:
         orm_mode = True
 
@@ -49,7 +50,7 @@ class QueueInDBBase(QueueBase):
 # Properties to return to client
 class Queue(QueueInDBBase):
     class Config:
-            orm_mode = True
+        orm_mode = True
     client: Client
 
 
@@ -83,5 +84,5 @@ class NewClientNoQueue(NewClient):
 
 
 class UUIDOnly(BaseModel):
-    uuid: str =Field(None, title="An UUID identifying the client's queue entry.",
+    uuid: str = Field(None, title="An UUID identifying the client's queue entry.",
                       example='aabbccdd-eeffgghh-123456')

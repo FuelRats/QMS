@@ -326,6 +326,17 @@ doc = ["mkdocs", "mkdocs-material", "markdown-include", "typer", "typer-cli", "p
 test = ["pytest (>=4.0.0)", "pytest-cov", "mypy", "black", "isort", "requests", "email-validator", "sqlalchemy", "peewee", "databases", "orjson", "async-exit-stack", "async-generator", "python-multipart", "aiofiles", "flask"]
 
 [[package]]
+name = "fastapi-security-typeform"
+version = "1.0.1"
+description = ""
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+fastapi = "*"
+
+[[package]]
 name = "flake8"
 version = "3.8.4"
 description = "the modular source code checker: pep8 pyflakes and co"
@@ -979,7 +990,7 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "ac4283bbcfddd12252fe8176b5e509044de37f7b20ab91a5046db8675cdd5c15"
+content-hash = "a0cc959cb0beb345c6aeaf19a201c5069157e3c8493728448fa07d35c8d582dc"
 
 [metadata.files]
 alembic = [
@@ -1178,6 +1189,10 @@ emails = [
 fastapi = [
     {file = "fastapi-0.54.2-py3-none-any.whl", hash = "sha256:c8651f8316956240c2ffe5bc05c334c8359a3887e642720a9b23319c51e82907"},
     {file = "fastapi-0.54.2.tar.gz", hash = "sha256:fff1b4a7fdf4812abb4507fb7aa30ef4206a0435839626ebe3b2871ec9aa367f"},
+]
+fastapi-security-typeform = [
+    {file = "fastapi-security-typeform-1.0.1.tar.gz", hash = "sha256:39e28e9b4fe4d0419a1219c701c9812f573dfc3f1ca2df8a2b07c41f7530e689"},
+    {file = "fastapi_security_typeform-1.0.1-py3-none-any.whl", hash = "sha256:b9905cff42c5e8790ea82cb4286516c92f7b9b8ae90bb1a9ac37b6af63bc2e83"},
 ]
 flake8 = [
     {file = "flake8-3.8.4-py2.py3-none-any.whl", hash = "sha256:749dbbd6bfd0cf1318af27bf97a14e28e5ff548ef8e5b1566ccfb25a11e7c839"},
