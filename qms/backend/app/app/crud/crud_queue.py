@@ -44,7 +44,8 @@ class CRUDQueue(CRUDBase[Queue, QueueCreate, QueueUpdate]):
         ret_queue = []
         for row in res:
             client = {'uuid': row[0].uuid, 'arrival_time': jsonable_encoder(row[0].arrival_time),
-                      'pending': row[0].pending, 'client': jsonable_encoder(row[1])}
+                      'pending': row[0].pending, 'in_progress': row[0].in_progress,
+                      'client': jsonable_encoder(row[1])}
             ret_queue.append(client)
         return ret_queue
 
