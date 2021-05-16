@@ -12,6 +12,7 @@ export default async function queueClient(parent, args, context): Promise<any> {
         locale: input.locale,
         o2_status: input.codeRed,
         odyssey: input.odyssey,
+        in_progress: false,
       },
     }
   );
