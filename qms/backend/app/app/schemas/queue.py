@@ -8,6 +8,7 @@ from .client import Client
 class QueueBase(BaseModel):
     arrival_time: Optional[datetime] = None
     pending: Optional[bool] = False
+    in_progress: Optional[bool] = False
     client: Optional[Client] = None
     uuid: Optional[str] = None
     class Config:
@@ -26,6 +27,7 @@ class QueueCreate(BaseModel):
 class QueueUpdate(QueueBase):
     uuid: str
     pending: bool
+    in_progress: bool
     client: Client
 
     class Config:
@@ -36,6 +38,7 @@ class QueueUpdate(QueueBase):
 class QueueInDBBase(QueueBase):
     arrival_time: datetime
     pending: bool
+    in_progress: bool
     uuid: str
     client: Client
 
@@ -61,6 +64,7 @@ class NewClient(BaseModel):
                                      "or 'go_head' meaning no queueing is necessary.",
                          example="queued")
     arrival_time: datetime = Field(None, title="ISO datetime for when the client was announced to QMS.")
+    in_progress: bool = Field(False, title="Whether the case is in progress or not.")
     pending: bool = Field(False, title="Whether the queued client is pending to be pulled into chat.")
     uuid: str = Field(None, title="An UUID identifying the client's queue entry.",
                       example='aabbccdd-eeffgghh-123456')

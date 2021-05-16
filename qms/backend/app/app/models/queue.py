@@ -15,4 +15,5 @@ class Queue(Base):
     client = relationship("Client", back_populates='queue')
     arrival_time = Column(DateTime)
     pending = Column(Boolean)
+    in_progress = Column(Boolean)
     uuid = Column(String)

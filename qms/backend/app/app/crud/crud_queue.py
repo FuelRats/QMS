@@ -27,7 +27,8 @@ class CRUDQueue(CRUDBase[Queue, QueueCreate, QueueUpdate]):
         db_obj = Queue(client=client_obj,
                        arrival_time=datetime.utcnow(),
                        uuid=str(uuid.uuid4()),
-                       pending=False)
+                       pending=False,
+                       in_progress=False)
         db.add(db_obj)
         db.commit()
         db.refresh(db_obj)
