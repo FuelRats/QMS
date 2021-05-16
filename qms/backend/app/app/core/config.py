@@ -86,6 +86,9 @@ class Settings(BaseSettings):
     FRAPI_URL: Optional[str] = "https://api.fuelrats.com/"
     FRAPI_TOKEN: Optional[str] = "2NdpZONC8lmNqkyD2AzmeA12pqz38VfA"
 
+    # Typeform Secrets
+    TYPEFORM_SECRET: Optional[str] = "deadbeef"
+
     class Config:
         case_sensitive = True
 
