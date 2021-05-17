@@ -14,6 +14,7 @@ from app.api import deps
 from app.models.queue import Queue
 from app.models.config import Config
 from app.utils import api_query
+from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 
 router = APIRouter()
 
@@ -59,13 +60,19 @@ def get_queue_by_uuid(
     """
     Retrieve specific queued client by its UUID
     """
-    row = db.query(Queue).filter(Queue.uuid == uuid).one()
-    if not row:
+    try:
+        row = db.query(Queue).filter(Queue.uuid == uuid).one()
+        if not row:
+            raise HTTPException(status_code=404, detail="UUID not found")
+        item = crud.queue.get(db=db, id=row.id)
+        if not item:
+            raise HTTPException(status_code=404, detail="Item not found")
+        return item
+    except NoResultFound:
         raise HTTPException(status_code=404, detail="UUID not found")
-    item = crud.queue.get(db=db, id=row.id)
-    if not item:
-        raise HTTPException(status_code=404, detail="Item not found")
-    return item
+    except MultipleResultsFound:
+        raise HTTPException(status_code=500, detail="More than one UUID was found! "
+                                                    "This should never happen.")
 
 
 @router.put("/uuid/{uuid}", response_model=schemas.Queue)
@@ -80,16 +87,23 @@ def update_queue(
     Update queue information.
     Accepts changes to pending or uuid fields.
     """
-    row = db.query(Queue).filter(Queue.uuid == uuid).one()
-    if not row:
-        raise HTTPException(status_code=404, detail="UUID not found")
-    item = crud.queue.get(db=db, id=row.id)
-    if not item:
-        raise HTTPException(status_code=404, detail="Item not found")
-    client = crud.client.update(db=db, db_obj=item.client, obj_in=queue_in.client)
-    item = crud.queue.update(db=db, db_obj=item, obj_in=queue_in)
+    try:
 
-    return item
+        row = db.query(Queue).filter(Queue.uuid == uuid).one()
+        if not row:
+            raise HTTPException(status_code=404, detail="UUID not found")
+        item = crud.queue.get(db=db, id=row.id)
+        if not item:
+            raise HTTPException(status_code=404, detail="Item not found")
+        client = crud.client.update(db=db, db_obj=item.client, obj_in=queue_in.client)
+        item = crud.queue.update(db=db, db_obj=item, obj_in=queue_in)
+
+        return item
+    except NoResultFound:
+        raise HTTPException(status_code=404, detail="UUID not found")
+    except MultipleResultsFound:
+        raise HTTPException(status_code=500, detail="More than one UUID was found! "
+                                                    "This should never happen.")
 
 
 @router.delete("/uuid/{uuid}", response_model=schemas.Queue)
@@ -101,11 +115,18 @@ def remove_queue(
     """
     Delete from queue by UUID
     """
-    row = db.query(Queue).filter(Queue.uuid == uuid).one()
-    if not row:
+    try:
+
+        row = db.query(Queue).filter(Queue.uuid == uuid).one()
+        if not row:
+            raise HTTPException(status_code=404, detail="UUID not found")
+        item = crud.queue.remove(db=db, id=row.id)
+        return item
+    except NoResultFound:
         raise HTTPException(status_code=404, detail="UUID not found")
-    item = crud.queue.remove(db=db, id=row.id)
-    return item
+    except MultipleResultsFound:
+        raise HTTPException(status_code=500, detail="More than one UUID was found! "
+                                                    "This should never happen.")
 
 
 @router.post("/dequeue", response_model=schemas.Queue)
