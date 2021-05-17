@@ -23,7 +23,12 @@ export default async function queuedClient(
     return null;
   }
   const result = await axios.get<QueueItem>(
-    process.env.QMS_URL + "/api/v1/queue/uuid/" + args.uuid
+    process.env.QMS_URL + "/api/v1/queue/uuid/" + args.uuid,
+    {
+      headers: {
+        Authorization: "Bearer " + process.env.QMS_API_TOKEN,
+      },
+    }
   );
 
   const currentRescue = result.data;
@@ -36,7 +41,12 @@ export default async function queuedClient(
     odyssey: currentRescue.client.odyssey,
     position: async (): Promise<number> => {
       const result = await axios.get<QueueItem[]>(
-        process.env.QMS_URL + "/api/v1/queue/"
+        process.env.QMS_URL + "/api/v1/queue/",
+        {
+          headers: {
+            Authorization: "Bearer " + process.env.QMS_API_TOKEN,
+          },
+        }
       );
       const rescues = result.data;
       const currentRescueDate = new Date(currentRescue.arrival_time);
