@@ -86,7 +86,9 @@ def update_queue(
     item = crud.queue.get(db=db, id=row.id)
     if not item:
         raise HTTPException(status_code=404, detail="Item not found")
+    client = crud.client.update(db=db, db_obj=item.client, obj_in=queue_in.client)
     item = crud.queue.update(db=db, db_obj=item, obj_in=queue_in)
+
     return item
 
 

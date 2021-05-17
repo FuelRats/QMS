@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union, Dict, Any
 
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session
@@ -28,6 +28,15 @@ class CRUDClient(CRUDBase[Client, ClientCreate, ClientUpdate]):
             .limit(limit)
             .all()
         )
+
+    def update_client(
+        self, db: Session, *, db_obj: Client, obj_in: Union[ClientUpdate, Dict[str, Any]]
+    ) -> Client:
+        if isinstance(obj_in, dict):
+            update_data = obj_in
+        else:
+            update_data = obj_in.dict(exclude_unset=True)
+        return super().update(db, db_obj=db_obj, obj_in=update_data)
 
 
 client = CRUDClient(Client)

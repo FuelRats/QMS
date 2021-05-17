@@ -26,6 +26,13 @@ class ClientCreate(ClientBase):
 
 # Properties to receive on item update
 class ClientUpdate(ClientBase):
+    client_name: str
+    client_system: str
+    platform: str
+    locale: str
+    o2_status: bool
+    odyssey: bool
+
     pass
 
 
