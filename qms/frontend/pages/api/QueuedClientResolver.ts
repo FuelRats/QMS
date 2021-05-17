@@ -2,6 +2,7 @@ import axios from "axios";
 
 interface QueueItem {
   pending: boolean;
+  in_progress: boolean;
   arrival_time: string;
   uuid: string;
   client: {
@@ -34,10 +35,12 @@ export default async function queuedClient(
   const currentRescue = result.data;
   return {
     pending: currentRescue.pending,
+    uuid: currentRescue.uuid,
     platform: currentRescue.client.platform,
     system: currentRescue.client.client_system,
     cmdr: currentRescue.client.client_name,
     codeRed: currentRescue.client.o2_status,
+    inProgress: currentRescue.in_progress,
     odyssey: currentRescue.client.odyssey,
     position: async (): Promise<number> => {
       const result = await axios.get<QueueItem[]>(

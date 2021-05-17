@@ -5,6 +5,7 @@ import { useQuery } from "@apollo/client";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import Image from "next/image";
 import React from "react";
+import pushClientToKiwi from "../../../src/helpers/PushClientToKiwi";
 
 const GET_QUEUED_CLIENT = gql`
   query GetQueuedClient($uuid: String!) {
@@ -29,19 +30,14 @@ export default function Index() {
   });
 
   if (!loading && !error && data?.queuedClient?.pending === true) {
-    const prefilledData = {
+    pushClientToKiwi({
       system: data.queuedClient.system,
       platform: data.queuedClient.platform,
       cmdr: data.queuedClient.cmdr,
       timer: data.queuedClient.codeRed,
       odyssey: data.queuedClient.odyssey,
       submit: true,
-    };
-    router.push(
-      process.env.NEXT_PUBLIC_KIWI_URL +
-        "?prefilledData=" +
-        btoa(JSON.stringify(prefilledData))
-    );
+    });
   }
 
   if (loading || !data) {

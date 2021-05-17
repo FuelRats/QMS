@@ -44,6 +44,7 @@ export const typeDefs = gql`
     pending: Boolean!
     uuid: String!
     platform: Platform!
+    inProgress: Boolean!
     locale: String!
     codeRed: Boolean!
     system: String!
