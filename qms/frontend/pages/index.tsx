@@ -1,6 +1,8 @@
 import {
+  Backdrop,
   Box,
   Button,
+  CircularProgress,
   Container,
   FormControlLabel,
   Radio,
@@ -10,7 +12,7 @@ import {
 } from "@material-ui/core";
 import SystemsSearch from "../src/components/SystemsSearch";
 import { gql } from "@apollo/client/core";
-import { useMutation } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import React, { useState } from "react";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import Image from "next/image";
@@ -32,8 +34,10 @@ enum EmptyBoolean {
 }
 
 export default function Home() {
-  const [queueNewClient, { loading, data: queuedClient }] =
-    useMutation(QUEUE_CLIENT);
+  const [
+    queueNewClient,
+    { loading, data: queuedClient, error: queueNewClientError },
+  ] = useMutation(QUEUE_CLIENT);
   const [platform, setPlatform] = useState<string>("");
   const [codeRed, setCodeRed] = useState<EmptyBoolean>(EmptyBoolean.EMPTY);
   const [name, setName] = useState<string>("");
@@ -70,38 +74,53 @@ export default function Home() {
   };
 
   const onSubmit = async () => {
+    const newClientInput = {
+      cmdr: name,
+      platform,
+      locale: navigator.language,
+      codeRed: codeRed === EmptyBoolean.TRUE,
+      odyssey: odyssey === EmptyBoolean.TRUE,
+      system: system,
+    };
+    localStorage.setItem(
+      "latestInput",
+      JSON.stringify({
+        input: newClientInput,
+        date: new Date().getUTCDate(),
+      })
+    );
+
     queueNewClient({
       variables: {
-        input: {
-          cmdr: name,
-          platform,
-          locale: navigator.language,
-          codeRed: codeRed === EmptyBoolean.TRUE,
-          odyssey: odyssey === EmptyBoolean.TRUE,
-          system: system,
-        },
+        input: newClientInput,
       },
     });
   };
-  if (queuedClient) {
-    if (queuedClient.queueClient.message === "queued") {
-      router.push("/queued/" + queuedClient.queueClient.uuid);
-    }
-    if (queuedClient.queueClient.message === "go_ahead") {
-      const prefilledData = {
-        system: system,
-        platform: platform,
-        cmdr: name,
-        timer: codeRed === EmptyBoolean.TRUE,
-        odyssey: odyssey === EmptyBoolean.TRUE,
-        submit: true,
-      };
-      router.push(
-        process.env.NEXT_PUBLIC_KIWI_URL +
-          "?prefilledData=" +
-          btoa(JSON.stringify(prefilledData))
-      );
-    }
+
+  if (queuedClient?.queueClient.message === "queued") {
+    localStorage.setItem(
+      "latestQueue",
+      JSON.stringify({
+        data: queuedClient.queueClient,
+        date: new Date().getUTCDate(),
+      })
+    );
+    router.push("/queued/" + queuedClient.queueClient.uuid);
+  }
+  if (queueNewClientError || queuedClient?.queueClient.message === "go_ahead") {
+    const prefilledData = {
+      system: system,
+      platform: platform,
+      cmdr: name,
+      timer: codeRed === EmptyBoolean.TRUE,
+      odyssey: odyssey === EmptyBoolean.TRUE,
+      submit: true,
+    };
+    router.push(
+      process.env.NEXT_PUBLIC_KIWI_URL +
+        "?prefilledData=" +
+        btoa(JSON.stringify(prefilledData))
+    );
   }
 
   return (
@@ -209,6 +228,9 @@ export default function Home() {
           Start
         </Button>
       </Box>
+      <Backdrop open={loading}>
+        <CircularProgress />
+      </Backdrop>
     </Container>
   );
 }

@@ -4,10 +4,15 @@ export const typeDefs = gql`
   type Query {
     systems(filter: SystemsFilterInput!): [System]!
     queuedClient(uuid: String!): QueuedClient!
+    queuedClients(filter: QueuedClientsFilter!): [QueuedClient]!
   }
 
   type Mutation {
     queueClient(input: QueueClientInput): QueuedClient
+  }
+
+  input QueuedClientsFilter {
+    cmdr: String
   }
 
   input SystemsFilterInput {

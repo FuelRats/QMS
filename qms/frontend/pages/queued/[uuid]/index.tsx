@@ -45,7 +45,11 @@ export default function Index() {
   }
 
   if (loading || !data) {
-    return <Typography>Loading your rescue....</Typography>;
+    return (
+      <Container maxWidth="xs">
+        <Typography>Loading your rescue....</Typography>
+      </Container>
+    );
   }
 
   return (
