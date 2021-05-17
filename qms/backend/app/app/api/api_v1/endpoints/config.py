@@ -23,8 +23,11 @@ def get_config(
     Get the current configuration settings
     """
     print("In get_config")
-    config = crud.config.get_config(db, skip=skip, limit=limit)
-    pass
+    current_config = db.query(models.config.Config).first()
+    return schemas.Config(max_active_clients=current_config.max_active_clients,
+                          prioritize_cr=current_config.prioritize_cr,
+                          prioritize_non_cr=current_config.prioritize_non_cr,
+                          clear_on_restart=current_config.clear_on_restart)
 
 
 @router.put("/", response_model=schemas.Config)
@@ -38,3 +41,30 @@ def set_config(
     """
 
     pass
+
+
+@router.put("/max_active_clients", response_model=schemas.Config)
+def set_maxclients(
+    *,
+    db: Session = Depends(deps.get_db),
+    max_active_clients: int,
+) -> Any:
+    """
+    Set max clients
+    :param db:
+    :param maxclients:
+    :param skip:
+    :param limit:
+    :return:
+    """
+    current_config = db.query(models.config.Config).first()
+    current_config.max_active_clients = max_active_clients
+    db.commit()
+    db.refresh(current_config)
+    print(f"{current_config}")
+
+    return schemas.Config(max_active_clients=current_config.max_active_clients,
+                          prioritize_cr=current_config.prioritize_cr,
+                          prioritize_non_cr=current_config.prioritize_non_cr,
+                          clear_on_restart=current_config.clear_on_restart)
+
