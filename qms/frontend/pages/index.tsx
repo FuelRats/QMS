@@ -86,7 +86,7 @@ export default function Home() {
       "latestInput",
       JSON.stringify({
         input: newClientInput,
-        date: new Date().getUTCDate(),
+        date: new Date().toISOString(),
       })
     );
 
@@ -102,7 +102,7 @@ export default function Home() {
       "latestQueue",
       JSON.stringify({
         data: queuedClient.queueClient,
-        date: new Date().getUTCDate(),
+        date: new Date().toISOString(),
       })
     );
     router.push("/queued/" + queuedClient.queueClient.uuid);
