@@ -14,6 +14,11 @@ export default async function queueClient(parent, args, context): Promise<any> {
         odyssey: input.odyssey,
         in_progress: false,
       },
+    },
+    {
+      headers: {
+        Authorization: "Bearer " + process.env.QMS_API_TOKEN,
+      },
     }
   );
 
