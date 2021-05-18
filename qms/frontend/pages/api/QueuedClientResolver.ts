@@ -56,7 +56,9 @@ export default async function queuedClient(
 
       return (
         rescues.filter(
-          (rescue) => new Date(rescue.arrival_time) < currentRescueDate
+          (rescue) =>
+            !rescue.in_progress &&
+            new Date(rescue.arrival_time) < currentRescueDate
         ).length + 1
       );
     },
