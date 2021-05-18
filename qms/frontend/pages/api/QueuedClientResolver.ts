@@ -58,6 +58,7 @@ export default async function queuedClient(
         rescues.filter(
           (rescue) =>
             !rescue.in_progress &&
+            !rescue.pending &&
             new Date(rescue.arrival_time) < currentRescueDate
         ).length + 1
       );
