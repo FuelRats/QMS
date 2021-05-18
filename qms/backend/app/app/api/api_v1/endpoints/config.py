@@ -9,6 +9,7 @@ from app import crud, models, schemas
 from app.api import deps
 from app.core.config import settings
 from app.models.config import Config
+from app.api.api_v1.endpoints.queue import api_dequeue
 
 router = APIRouter()
 
@@ -54,6 +55,10 @@ def set_maxclients(
     :param max_active_clients: Maximum number of active clients
     """
     current_config = db.query(models.config.Config).first()
+    if current_config.max_active_clients < max_active_clients:
+        num_dequeue = max_active_clients - current_config.max_active_clients
+        for x in range(num_dequeue):
+            api_dequeue(db=db)
     current_config.max_active_clients = max_active_clients
     db.commit()
     db.refresh(current_config)
