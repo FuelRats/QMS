@@ -53,9 +53,14 @@ export default function Home() {
   const [
     queueNewClient,
     { loading, data: queuedClient, error: queueNewClientError },
-  ] = useMutation(QUEUE_CLIENT);
+  ] = useMutation(QUEUE_CLIENT, {
+    fetchPolicy: "no-cache",
+  });
   const [findQueueUuid, { data: alreadyQueuedClient }] = useLazyQuery(
-    QUEUED_CLIENT_FIND_UUID
+    QUEUED_CLIENT_FIND_UUID,
+    {
+      fetchPolicy: "no-cache",
+    }
   );
   const [platform, setPlatform] = useState<string>("");
   const [codeRed, setCodeRed] = useState<EmptyBoolean>(EmptyBoolean.EMPTY);
