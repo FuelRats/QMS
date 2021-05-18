@@ -27,6 +27,7 @@ export default function Index() {
   const { data, loading, error } = useQuery(GET_QUEUED_CLIENT, {
     variables: { uuid },
     pollInterval: parseInt(process.env.NEXT_PUBLIC_QUEUE_POLL_INTERVAL),
+    fetchPolicy: "no-cache",
   });
 
   if (!loading && !error && data?.queuedClient?.pending === true) {
