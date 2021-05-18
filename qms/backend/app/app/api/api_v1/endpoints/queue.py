@@ -166,5 +166,8 @@ def new_client(
                'pending': queue.pending, 'client': queue.client}
         return res
     else:
-        return {'message': 'go_ahead', 'uuid': str(uid), 'arrival_time': datetime.datetime.utcnow().isoformat(),
-                'client': client_in.client}
+        client_in.pending = True
+        queue = crud.queue.create(db, obj_in=client_in)
+        res = {'message': 'go_ahead', 'uuid': queue.uuid, 'arrival_time': queue.arrival_time,
+               'client': queue.client}
+        return res
