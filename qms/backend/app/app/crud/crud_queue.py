@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime
-from typing import List, Optional, Union, Dict, Any
+from typing import List, Union, Dict, Any
 
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.orm import Session

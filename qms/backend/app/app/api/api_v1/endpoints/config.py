@@ -51,11 +51,7 @@ def set_maxclients(
 ) -> Any:
     """
     Set max clients
-    :param db:
-    :param maxclients:
-    :param skip:
-    :param limit:
-    :return:
+    :param max_active_clients: Maximum number of active clients
     """
     current_config = db.query(models.config.Config).first()
     current_config.max_active_clients = max_active_clients

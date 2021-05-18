@@ -28,8 +28,6 @@ def get_queue(
     """
     Get the current queue
     """
-    print("In get_queue")
-    print(api_query("rescues", "status", "open"))
     queue = crud.queue.get_multi(db, skip=skip, limit=limit)
     return queue
 
@@ -43,8 +41,6 @@ def read_queue(
     """
     Retrieve queue.
     """
-    print("In read_queue")
-    print(api_query("rescues", "status", "open"))
     queue = crud.queue.get_multi(db, skip=skip, limit=limit)
     return queue
 
