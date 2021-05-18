@@ -102,7 +102,7 @@ def update_queue(
                                                     "This should never happen.")
 
 
-@router.delete("/uuid/{uuid}", response_model=schemas.Queue)
+@router.delete("/uuid/{uuid}")
 def remove_queue(
         *,
         db: Session = Depends(deps.get_db),
@@ -116,8 +116,10 @@ def remove_queue(
         row = db.query(Queue).filter(Queue.uuid == uuid).one()
         if not row:
             raise HTTPException(status_code=404, detail="UUID not found")
-        item = crud.queue.remove(db=db, id=row.id)
-        return item
+        client = db.query(Client).filter(Client.id == row.client.id).one()
+        crud.client.remove(db=db, id=client.id)
+        crud.queue.remove(db=db, id=row.id)
+        return {'status': 'Success'}
     except NoResultFound:
         raise HTTPException(status_code=404, detail="UUID not found")
     except MultipleResultsFound:
