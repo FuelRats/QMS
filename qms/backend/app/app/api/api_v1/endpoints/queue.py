@@ -173,7 +173,7 @@ def new_client(
     except MultipleResultsFound:
         raise HTTPException(status_code=500, detail="More than one UUID was found for this client! "
                                                     "This should never happen.")
-    if clients > maxclients or maxclients == 0:
+    if clients >= maxclients or maxclients == 0:
         # Queue and return.
         response.status_code = status.HTTP_201_CREATED
         queue = crud.queue.create(db, obj_in=client_in)
