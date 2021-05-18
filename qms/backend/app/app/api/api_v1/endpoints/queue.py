@@ -13,7 +13,6 @@ from app import crud, models, schemas
 from app.api import deps
 
 from app.models.queue import Queue
-from app.models.client import Client as ClientModel
 from app.models.config import Config
 from app.utils import api_query
 from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
@@ -160,7 +159,7 @@ def new_client(
     clients = api_query("rescues", "status", "open")['meta']['total']
     print(f"Got API query result: {clients}")
     try:
-        cur_queue = db.query(Queue).filter(Queue.client.client_name == client_in.client.client_name).one()
+        cur_queue = db.query(Queue).filter(Queue.client.has(Client.client_name == client_in.client.client_name)).one()
         if cur_queue:
             if cur_queue.pending == True:
                 res = {'message': 'go_ahead', 'uuid': cur_queue.uuid, 'arrival_time': cur_queue.arrival_time,
