@@ -157,7 +157,7 @@ def new_client(
     """
     maxclients = db.query(Config).first().max_active_clients
     clients = api_query("rescues", "status", "open")['meta']['total']
-
+    print(f"Got API query result: {clients}")
     if clients > maxclients or maxclients == 0:
         # Queue and return.
         response.status_code = status.HTTP_201_CREATED
