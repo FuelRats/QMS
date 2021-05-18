@@ -12,17 +12,33 @@ import {
 } from "@material-ui/core";
 import SystemsSearch from "../src/components/SystemsSearch";
 import { gql } from "@apollo/client/core";
-import { useLazyQuery, useMutation } from "@apollo/client";
-import React, { useState } from "react";
+import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
+import React, { useEffect, useState } from "react";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import pushClientToKiwi from "../src/helpers/PushClientToKiwi";
 
 const QUEUE_CLIENT = gql`
   mutation QueueClient($input: QueueClientInput) {
     queueClient(input: $input) {
       message
       uuid
+    }
+  }
+`;
+
+const QUEUED_CLIENT_FIND_UUID = gql`
+  query QueuedClient($uuid: String!) {
+    queuedClient(uuid: $uuid) {
+      inProgress
+      uuid
+      pending
+      platform
+      system
+      cmdr
+      codeRed
+      odyssey
     }
   }
 `;
@@ -38,6 +54,9 @@ export default function Home() {
     queueNewClient,
     { loading, data: queuedClient, error: queueNewClientError },
   ] = useMutation(QUEUE_CLIENT);
+  const [findQueueUuid, { data: alreadyQueuedClient }] = useLazyQuery(
+    QUEUED_CLIENT_FIND_UUID
+  );
   const [platform, setPlatform] = useState<string>("");
   const [codeRed, setCodeRed] = useState<EmptyBoolean>(EmptyBoolean.EMPTY);
   const [name, setName] = useState<string>("");
@@ -50,6 +69,34 @@ export default function Home() {
     system.length &&
     ((platform === "PC" && odyssey !== EmptyBoolean.EMPTY) ||
       platform !== "PC");
+
+  if (alreadyQueuedClient) {
+    if (
+      !alreadyQueuedClient.queuedClient.inProgress &&
+      !alreadyQueuedClient.queuedClient.pending
+    ) {
+      router.push("/queued/" + alreadyQueuedClient.queuedClient.uuid);
+    } else {
+      pushClientToKiwi({
+        system: alreadyQueuedClient.queuedClient.system,
+        platform: alreadyQueuedClient.queuedClient.platform,
+        cmdr: alreadyQueuedClient.queuedClient.cmdr,
+        timer: alreadyQueuedClient.queuedClient.codeRed,
+        odyssey: alreadyQueuedClient.queuedClient.odyssey,
+        submit: true,
+      });
+    }
+  }
+
+  useEffect(() => {
+    const lastQueueString = localStorage.getItem("latestQueue");
+    if (lastQueueString) {
+      const lastQueue = JSON.parse(lastQueueString);
+      if (lastQueue?.data?.uuid?.length) {
+        findQueueUuid({ variables: { uuid: lastQueue.data.uuid } });
+      }
+    }
+  }, [findQueueUuid]);
 
   const handlePlatformChange = (event) => {
     setPlatform(event.target.value);
@@ -107,20 +154,16 @@ export default function Home() {
     );
     router.push("/queued/" + queuedClient.queueClient.uuid);
   }
+
   if (queueNewClientError || queuedClient?.queueClient.message === "go_ahead") {
-    const prefilledData = {
+    pushClientToKiwi({
       system: system,
       platform: platform,
       cmdr: name,
       timer: codeRed === EmptyBoolean.TRUE,
       odyssey: odyssey === EmptyBoolean.TRUE,
       submit: true,
-    };
-    router.push(
-      process.env.NEXT_PUBLIC_KIWI_URL +
-        "?prefilledData=" +
-        btoa(JSON.stringify(prefilledData))
-    );
+    });
   }
 
   return (
