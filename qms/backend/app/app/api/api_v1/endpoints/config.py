@@ -10,6 +10,7 @@ from app.api import deps
 from app.core.config import settings
 from app.models.config import Config
 from app.api.api_v1.endpoints.queue import api_dequeue
+from app.models.queue import Queue
 
 router = APIRouter()
 
@@ -57,8 +58,11 @@ def set_maxclients(
     current_config = db.query(models.config.Config).first()
     if current_config.max_active_clients < max_active_clients:
         num_dequeue = max_active_clients - current_config.max_active_clients
-        for x in range(num_dequeue):
-            api_dequeue(db=db)
+        pending_clients = db.query(models.queue.Queue).filter(Queue.pending == False).\
+            order_by(Queue.arrival_time.asc()).limit(num_dequeue)
+        for row in pending_clients:
+            row.pending = True
+        db.commit()
     current_config.max_active_clients = max_active_clients
     db.commit()
     db.refresh(current_config)
