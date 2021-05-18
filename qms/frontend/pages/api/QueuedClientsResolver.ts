@@ -2,6 +2,7 @@ import axios from "axios";
 
 interface QueueItem {
   pending: boolean;
+  in_progress: boolean;
   arrival_time: string;
   uuid: string;
   client: {
@@ -36,6 +37,7 @@ export default async function queuedClients(
   }
   return rescues.map((currentRescue) => ({
     pending: currentRescue.pending,
+    inProgress: currentRescue.in_progress,
     platform: currentRescue.client.platform,
     system: currentRescue.client.client_system,
     cmdr: currentRescue.client.client_name,
@@ -55,7 +57,9 @@ export default async function queuedClients(
 
       return (
         rescues.filter(
-          (rescue) => new Date(rescue.arrival_time) < currentRescueDate
+          (rescue) =>
+            !rescue.in_progress &&
+            new Date(rescue.arrival_time) < currentRescueDate
         ).length + 1
       );
     },
