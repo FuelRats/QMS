@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, HTTPException, Response, status
 import datetime
 import uuid
 
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 
 from app import crud, models, schemas
@@ -57,7 +58,7 @@ def get_queue_by_uuid(
     Retrieve specific queued client by its UUID
     """
     try:
-        row = db.query(Queue).filter(Queue.uuid == uuid).one()
+        row = db.query(Queue).filter(func.lower(Queue.uuid) == uuid.lower()).one()
         if not row:
             raise HTTPException(status_code=404, detail="UUID not found")
         item = crud.queue.get(db=db, id=row.id)
@@ -85,7 +86,7 @@ def update_queue(
     """
     try:
 
-        row = db.query(Queue).filter(Queue.uuid == uuid).one()
+        row = db.query(Queue).filter(func.lower(Queue.uuid) == uuid.lower()).one()
         if not row:
             raise HTTPException(status_code=404, detail="UUID not found")
         item = crud.queue.get(db=db, id=row.id)
@@ -113,7 +114,7 @@ def remove_queue(
     """
     try:
 
-        row = db.query(Queue).filter(Queue.uuid == uuid).one()
+        row = db.query(Queue).filter(func.lower(Queue.uuid) == uuid.lower()).one()
         if not row:
             raise HTTPException(status_code=404, detail="UUID not found")
         client = db.query(Client).filter(Client.id == row.client.id).one()
@@ -157,7 +158,6 @@ def new_client(
     maxclients = db.query(Config).first().max_active_clients
     clients = api_query("rescues", "status", "open")['meta']['total']
 
-    uid = uuid.uuid4()
     if clients > maxclients or maxclients == 0:
         # Queue and return.
         response.status_code = status.HTTP_201_CREATED
