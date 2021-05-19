@@ -21,7 +21,7 @@ export default async function queuedClients(
   context
 ): Promise<any> {
   const result = await axios.get<QueueItem[]>(
-    process.env.QMS_URL + "/api/v1/queue",
+    process.env.QMS_URL + "/api/v1/queue/",
     {
       headers: {
         Authorization: "Bearer " + process.env.QMS_API_TOKEN,
