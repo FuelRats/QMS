@@ -28,6 +28,7 @@ export default function Index() {
     variables: { uuid },
     pollInterval: parseInt(process.env.NEXT_PUBLIC_QUEUE_POLL_INTERVAL),
     fetchPolicy: "no-cache",
+    skip: !uuid,
   });
 
   if (!loading && !error && data?.queuedClient?.pending === true) {
@@ -41,20 +42,30 @@ export default function Index() {
     });
   }
 
-  if (error) {
-    if (data?.queuedClient) {
-      pushClientToKiwi({
-        system: data.queuedClient.system,
-        platform: data.queuedClient.platform.toUpperCase(),
-        cmdr: data.queuedClient.cmdr,
-        timer: data.queuedClient.codeRed,
-        odyssey: data.queuedClient.odyssey,
-        submit: true,
-      });
-    } else {
-      localStorage.removeItem("latestInput");
-      localStorage.removeItem("latestQueue");
-      window.location.href = "/";
+  if (!loading && error) {
+    const lastInputString = localStorage.getItem("latestQueue");
+    if (lastInputString) {
+      const lastInput = JSON.parse(lastInputString);
+      if (lastInput?.input) {
+        try {
+          pushClientToKiwi({
+            system: lastInput.input.system,
+            platform: lastInput.input.platform,
+            cmdr: lastInput.input.cmdr,
+            timer: lastInput.input.codeRed,
+            odyssey: lastInput.input.odyssey,
+            submit: true,
+          });
+        } catch (e) {
+          localStorage.removeItem("latestInput");
+          localStorage.removeItem("latestQueue");
+          window.location.href = "/";
+        }
+      } else {
+        localStorage.removeItem("latestInput");
+        localStorage.removeItem("latestQueue");
+        window.location.href = "/";
+      }
     }
   }
 
