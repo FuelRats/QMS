@@ -41,6 +41,23 @@ export default function Index() {
     });
   }
 
+  if (error) {
+    if (data?.queuedClient) {
+      pushClientToKiwi({
+        system: data.queuedClient.system,
+        platform: data.queuedClient.platform.toUpperCase(),
+        cmdr: data.queuedClient.cmdr,
+        timer: data.queuedClient.codeRed,
+        odyssey: data.queuedClient.odyssey,
+        submit: true,
+      });
+    } else {
+      localStorage.removeItem("latestInput");
+      localStorage.removeItem("latestQueue");
+      window.location.href = "/";
+    }
+  }
+
   if (loading || !data) {
     return (
       <Container maxWidth="xs">

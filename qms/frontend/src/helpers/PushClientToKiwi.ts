@@ -1,6 +1,6 @@
 export default function pushClientToKiwi(prefilledData: {
   system: string;
-  platform: string;
+  platform: "PC" | "XB" | "PS4";
   cmdr: string;
   timer: boolean;
   odyssey: boolean;

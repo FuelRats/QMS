@@ -2,13 +2,14 @@ import axios from "axios";
 
 export default async function queueClient(parent, args, context): Promise<any> {
   const input = args.input;
+
   const queuedClient = await axios.put(
     process.env.QMS_URL + "/api/v1/queue/newclient",
     {
       client: {
         client_name: input.cmdr,
         client_system: input.system,
-        platform: input.platform,
+        platform: input.platform.toLowerCase(),
         locale: input.locale,
         o2_status: input.codeRed,
         odyssey: input.odyssey,
