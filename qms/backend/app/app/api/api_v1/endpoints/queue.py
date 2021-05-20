@@ -55,13 +55,13 @@ def get_queue_by_uuid(
     try:
         row = db.query(Queue).filter(func.lower(Queue.uuid) == uuid.lower()).one()
         if not row:
-            raise HTTPException(status_code=204, detail="UUID not found")
+            raise HTTPException(status_code=404, detail="UUID not found")
         item = crud.queue.get(db=db, id=row.id)
         if not item:
-            raise HTTPException(status_code=204, detail="UUID found, but no matching queue data")
+            raise HTTPException(status_code=404, detail="UUID found, but no matching queue data")
         return item
     except NoResultFound:
-        raise HTTPException(status_code=204, detail="UUID not found")
+        raise HTTPException(status_code=404, detail="UUID not found")
     except MultipleResultsFound:
         raise HTTPException(status_code=500, detail="More than one UUID was found! "
                                                     "This should never happen.")
@@ -83,16 +83,16 @@ def update_queue(
 
         row = db.query(Queue).filter(func.lower(Queue.uuid) == uuid.lower()).one()
         if not row:
-            raise HTTPException(status_code=204, detail="UUID not found")
+            raise HTTPException(status_code=404, detail="UUID not found")
         item = crud.queue.get(db=db, id=row.id)
         if not item:
-            raise HTTPException(status_code=204, detail="UUID found, but no matching queue data")
+            raise HTTPException(status_code=404, detail="UUID found, but no matching queue data")
         item = crud.queue.update(db=db, db_obj=item, obj_in=queue_in)
         client = crud.client.update(db=db, db_obj=item.client, obj_in=queue_in.client)
         db.refresh(item)
         return item
     except NoResultFound:
-        raise HTTPException(status_code=204, detail="UUID not found")
+        raise HTTPException(status_code=404, detail="UUID not found")
     except MultipleResultsFound:
         raise HTTPException(status_code=500, detail="More than one UUID was found! "
                                                     "This should never happen.")
@@ -111,13 +111,13 @@ def remove_queue(
 
         row = db.query(Queue).filter(func.lower(Queue.uuid) == uuid.lower()).one()
         if not row:
-            raise HTTPException(status_code=204, detail="UUID not found")
+            raise HTTPException(status_code=404, detail="UUID not found")
         client = db.query(Client).filter(Client.id == row.client.id).one()
         crud.client.remove(db=db, id=client.id)
         crud.queue.remove(db=db, id=row.id)
         return {'status': 'Success'}
     except NoResultFound:
-        raise HTTPException(status_code=204, detail="UUID not found")
+        raise HTTPException(status_code=404, detail="UUID not found")
     except MultipleResultsFound:
         raise HTTPException(status_code=500, detail="More than one UUID was found! "
                                                     "This should never happen.")
