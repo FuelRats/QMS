@@ -3,6 +3,7 @@ import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 
 import theme from "../src/theme";
+import { appWithTranslation } from "next-i18next";
 
 const client = new ApolloClient({
   uri: "/api/graphql",
@@ -20,4 +21,4 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-export default MyApp;
+export default appWithTranslation(MyApp);

@@ -1,0 +1,21 @@
+{
+  "timer?": "Do you see an 'oxygen depleted' timer?",
+  "exitAlert": {
+    "title": "EXIT TO MAIN MENU",
+    "exitInstructions": "Please exit to the main menu where you can see your ship in the hangar <strong>immediately</strong>!"
+  },
+  "infoAlert": {
+    "enterGameWarning": "Do not enter back into the game unless you are told so.",
+    "gatherInfo": "<strong>DO NOT login to check</strong>, but write down how much time was left on the oxygen clock and where you were approximately in the system. This will be asked during the rescue."
+  },
+  "cmdrName": "CMDR Name",
+  "system": {
+    "systemName": "System Name",
+    "searchLabel": "Search for a system"
+  },
+  "platform" : {
+    "odyssey?": "Are you playing on Odyssey?",
+    "header": "Platform"
+  },
+  "start": "Start"
+}

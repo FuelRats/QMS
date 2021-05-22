@@ -18,6 +18,9 @@ import { Alert, AlertTitle } from "@material-ui/lab";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import pushClientToKiwi from "../src/helpers/PushClientToKiwi";
+import { Trans, useTranslation } from "react-i18next";
+
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const QUEUE_CLIENT = gql`
   mutation QueueClient($input: QueueClientInput) {
@@ -68,6 +71,7 @@ export default function Home() {
   const [system, setSystem] = useState<string>("");
   const [odyssey, setOdyssey] = useState<EmptyBoolean>(EmptyBoolean.EMPTY);
   const router = useRouter();
+  const { t } = useTranslation();
   const canStart =
     platform.length &&
     name.length &&
@@ -177,7 +181,7 @@ export default function Home() {
         <Image src="/logo.svg" layout="fixed" width={250} height={250} />
       </Box>
       <Typography component="h1" variant="h5">
-        Do you see an &apos;oxygen depleted&apos; timer?
+        {t("rescueForm:timer?")}
       </Typography>
       <RadioGroup
         value={codeRed}
@@ -187,12 +191,12 @@ export default function Home() {
       >
         <FormControlLabel
           control={<Radio />}
-          label="Yes"
+          label={t("common:yes")}
           value={EmptyBoolean.TRUE}
         />
         <FormControlLabel
           control={<Radio />}
-          label="No"
+          label={t("common:no")}
           value={EmptyBoolean.FALSE}
         />
       </RadioGroup>
@@ -200,26 +204,31 @@ export default function Home() {
         <>
           <Box my={2}>
             <Alert severity="error">
-              <AlertTitle>EXIT TO MAIN MENU</AlertTitle>
-              Please exit to the main menu where you can see your ship in the
-              hangar <strong>immediately!</strong>
+              <AlertTitle>
+                {t("rescueForm:exitAlert.title").toUpperCase()}
+              </AlertTitle>
+              <Trans
+                i18nKey="rescueForm:exitAlert.exitInstructions"
+                components={{ strong: <strong /> }}
+              />
             </Alert>
           </Box>
           <Box my={2}>
             <Alert severity="warning">
-              Do not enter back into the game unless you are told so.
+              {t("rescueForm:infoAlert.enterGameWarning")}
               <br />
               <br />
-              <strong>DO NOT login to check</strong>, but write down how much
-              time was left on the oxygen clock and where you were approximately
-              in the system. This will be asked during the rescue.
+              <Trans
+                i18nKey="rescueForm:infoAlert.gatherInfo"
+                components={{ strong: <strong /> }}
+              />
             </Alert>
           </Box>
         </>
       )}
 
       <Box my={2}>
-        <Typography>CMDR Name</Typography>
+        <Typography>{t("rescueForm:cmdrName")}</Typography>
         <TextField
           placeholder="Surly Badger"
           fullWidth
@@ -230,11 +239,14 @@ export default function Home() {
       </Box>
 
       <Box my={2}>
-        <Typography>System Name</Typography>
-        <SystemsSearch onChange={handleSystemChange} />
+        <Typography>{t("rescueForm:system.systemName")}</Typography>
+        <SystemsSearch
+          onChange={handleSystemChange}
+          label={t("rescueForm:system.searchLabel")}
+        />
       </Box>
 
-      <Typography>Platform</Typography>
+      <Typography>{t("rescueForm:platform.header")}</Typography>
       <RadioGroup
         value={platform}
         aria-label="large primary button group"
@@ -248,17 +260,17 @@ export default function Home() {
 
       {platform === "PC" && (
         <Box my={2}>
-          <Typography>Are you playing on Odyssey?</Typography>
+          <Typography>{t("rescueForm:platform.odyssey?")}</Typography>
           <RadioGroup row value={odyssey} onChange={handleOdysseyChange}>
             <FormControlLabel
               value={EmptyBoolean.TRUE}
               control={<Radio />}
-              label="Yes"
+              label={t("common:yes")}
             />
             <FormControlLabel
               value={EmptyBoolean.FALSE}
               control={<Radio />}
-              label="No"
+              label={t("common:no")}
             />
           </RadioGroup>
         </Box>
@@ -273,7 +285,7 @@ export default function Home() {
           size="large"
           color="secondary"
         >
-          Start
+          {t("rescueForm:start")}
         </Button>
       </Box>
       <Backdrop open={loading}>
@@ -281,4 +293,12 @@ export default function Home() {
       </Backdrop>
     </Container>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common", "rescueForm"])),
+    },
+  };
 }

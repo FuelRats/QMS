@@ -1,0 +1,21 @@
+{
+  "timer?": "Siehst du einen 'Sauerstoff leer in' Zähler?",
+  "exitAlert": {
+    "title": "Gehe ins Hauptmenü",
+    "exitInstructions": "Bitte gehe sofort aus dem Spiel raus ins Hauptmenü, wo du dein Schiff im Hangar siehst."
+  },
+  "infoAlert": {
+    "enterGameWarning": "Gehe nicht wieder ins Spiel, bevor es dir jemand sagt.",
+    "gatherInfo": "<strong>OHNE ins Spiel zu gehen<strong>, schreibe dir auf wie viel Zeit noch auf dem Sauerstoffzähler war und wo du ungefähr im Spiel warst. Das wirst du später gefragt werden."
+  },
+  "cmdrName": "CMDR Name",
+  "system": {
+    "systemName": "Systemname",
+    "searchLabel": "Suche ein System"
+  },
+  "platform" : {
+    "odyssey?": "Spielst du die Odyssey Erweiterung?",
+    "header": "Platform"
+  },
+  "start": "Start"
+}
