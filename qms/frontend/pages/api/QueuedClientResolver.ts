@@ -36,7 +36,7 @@ export default async function queuedClient(
   return {
     pending: currentRescue.pending,
     uuid: currentRescue.uuid,
-    platform: currentRescue.client.platform,
+    platform: currentRescue.client.platform.toUpperCase(),
     system: currentRescue.client.client_system,
     cmdr: currentRescue.client.client_name,
     codeRed: currentRescue.client.o2_status,
