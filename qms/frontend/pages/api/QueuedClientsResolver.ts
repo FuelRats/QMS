@@ -38,7 +38,7 @@ export default async function queuedClients(
   return rescues.map((currentRescue) => ({
     pending: currentRescue.pending,
     inProgress: currentRescue.in_progress,
-    platform: currentRescue.client.platform,
+    platform: currentRescue.client.platform.toUpperCase(),
     system: currentRescue.client.client_system,
     cmdr: currentRescue.client.client_name,
     codeRed: currentRescue.client.o2_status,

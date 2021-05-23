@@ -1,0 +1,13 @@
+{
+  "loading": "Lade deine Rettung...",
+  "queueAlert": {
+    "inQueue": "Du bist in der Warteschlange!",
+    "busy": "Wir sind gerade sehr beschäftigt.",
+    "refresh": "Diese Seite wird sich automatisch aktualisieren, wenn du dran bist."
+  },
+  "fuelAlert": {
+    "exit": "Gehe ins Hauptmenü",
+    "instructions": "Damit du nicht unnötig Treibstoff verbrauchst gehe bitte ins Hauptmenü, wo du dein Schiff im Hangar siehst während du wartest."
+  },
+  "position": "Deine Position in der Warteschlange: {{position}}"
+}

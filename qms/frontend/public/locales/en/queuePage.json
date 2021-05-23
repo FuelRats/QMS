@@ -1,0 +1,13 @@
+{
+  "loading": "Loading your rescue...",
+  "queueAlert": {
+    "inQueue": "You are in the Queue!",
+    "busy": "It is currently extremely busy with rescue cases.",
+    "refresh": "This screen will refresh automatically and let you in once it's your turn."
+  },
+  "fuelAlert": {
+    "exit": "Exit to the main menu",
+    "instructions": "To prevent burning unnecessary fuel, please exit to the main menu where you can see your ship in the hangar while you wait here."
+  },
+  "position": "Your position in the queue: {{position}}"
+}
