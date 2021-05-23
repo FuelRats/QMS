@@ -18,7 +18,8 @@ def test_celery(word: str) -> str:
 
 
 @celery_app.task(acks_late=True)
-def clean_queue(db: Session = Depends(deps.get_db)) -> str:
+def clean_queue(msg: str) -> str:
+    db = Depends(deps.get_db)
     print("In clear_queue()")
     timeout = datetime.datetime.utcnow() - datetime.timedelta(minutes=15)
     old_queue = db.query(Queue).filter(Queue.pending == True).\

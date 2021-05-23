@@ -187,10 +187,10 @@ def new_client(
 
 @router.post("/clean_queue/", response_model=schemas.Msg, status_code=200)
 def clean_queue(
-        db: Session = Depends(deps.get_db)
+        msg: schemas.Msg
 ) -> Any:
     """
     Clean queue of stale entries
     """
-    celery_app.send_task("app.worker.clean_queue", args=[db])
+    celery_app.send_task("app.worker.clean_queue", args=[msg.msg])
     return {"msg": "Cleaned queue."}
