@@ -192,5 +192,5 @@ def clean_queue(
     """
     Clean queue of stale entries
     """
-    celery_app.send_task("app.worker.clean_queue", args=db)
+    celery_app.send_task("app.worker.clean_queue", args=[db])
     return {"msg": "Cleaned queue."}
