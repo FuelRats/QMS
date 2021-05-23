@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 
 from app import crud, schemas
 from app.api import deps
+from app.core.celery_app import celery_app
 
 from app.models.queue import Queue
 from app.models.config import Config
@@ -182,3 +183,14 @@ def new_client(
         res = {'message': 'go_ahead', 'uuid': queue.uuid, 'arrival_time': queue.arrival_time,
                'client': queue.client}
         return res
+
+
+@router.post("/clean_queue/", response_model=schemas.Msg, status_code=200)
+def clean_queue(
+        db: Session = Depends(deps.get_db)
+) -> Any:
+    """
+    Clean queue of stale entries
+    """
+    celery_app.send_task("app.worker.clean_queue", args=db)
+    return {"msg": "Cleaned queue."}
