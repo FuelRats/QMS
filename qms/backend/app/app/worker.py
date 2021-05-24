@@ -10,14 +10,6 @@ from app.core.config import settings
 client_sentry = Client(settings.SENTRY_DSN)
 
 
-def get_session():
-    try:
-        db = SessionLocal()
-        yield db
-    finally:
-        db.close()
-
-
 @celery_app.task(acks_late=True)
 def test_celery(word: str) -> str:
     return f"test task return {word}"
@@ -25,7 +17,7 @@ def test_celery(word: str) -> str:
 
 @celery_app.task(acks_late=True)
 def clean_queue(msg: str) -> str:
-    db = get_session()
+    db = SessionLocal()
     print("In clear_queue()")
     timeout = datetime.datetime.utcnow() - datetime.timedelta(minutes=15)
     old_queue = db.query(Queue).filter(Queue.pending == True).\
