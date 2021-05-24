@@ -103,6 +103,7 @@ export default function Index() {
           </AlertTitle>
           {t("queuePage:queueAlert.busy")}
           <br />
+          {t("queuePage:queueAlert.refresh")}
         </Alert>
       </Box>
       <Box my={2}>
