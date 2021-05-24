@@ -24,6 +24,6 @@ def clean_queue(msg: str) -> str:
         filter(Queue.arrival_time <= timeout).filter(Queue.in_progress == False)
     for row in old_queue:
         print(f"Timing out queue entry {row.uuid}")
-        row.delete()
+        db.delete(row)
     db.commit()
     return "Queue cleaned."
