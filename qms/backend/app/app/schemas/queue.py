@@ -11,6 +11,7 @@ class QueueBase(BaseModel):
     in_progress: Optional[bool] = False
     client: Optional[Client] = None
     uuid: Optional[str] = None
+    dequeued_at: Optional[datetime] = None
 
     class Config:
         orm_mode = True
@@ -30,6 +31,7 @@ class QueueUpdate(QueueBase):
     pending: bool
     in_progress: bool
     client: Client
+    dequeued_at: Optional[datetime]
 
     class Config:
         orm_mode = True
@@ -40,6 +42,7 @@ class QueueInDBBase(QueueBase):
     arrival_time: datetime
     pending: bool
     in_progress: bool
+    dequeued_at: datetime
     uuid: str
     client: Client
 
