@@ -89,3 +89,27 @@ class NewClientNoQueue(NewClient):
 class UUIDOnly(BaseModel):
     uuid: str = Field(None, title="An UUID identifying the client's queue entry.",
                       example='aabbccdd-eeffgghh-123456')
+
+
+class StatisticsEntry(BaseModel):
+    uuid: str = Field(None, title="UUID of the original queue entry",
+                      example="aabbccdd-eeffgghh-123456")
+    arrival_time: datetime = Field(None, title="ISO datetime for when the client was announced to QMS.")
+    dequeued_at: datetime = Field(None,
+                                  title="When the client was dequeued into chat, null if never dequeued.")
+    deleted_at: datetime = Field(None, title="When the queue entry was deleted, null if never deleted.")
+    purged: bool = Field(None, title="Whether the queue entry was purged by cleanup procedures, "
+                                     "meaning the rescue likely didn't happen.")
+
+
+class Statistics(BaseModel):
+    total_clients: int = Field(None, title="Total number of clients passing through on this day.")
+    instant_join: int = Field(None, title="Total number of clients immediately passed to IRC.")
+    queued_join: int = Field(None, title="Total number of clients that waited before joining IRC.")
+    average_queuetime: int = Field(None, title="How many seconds the average queue entry was in "
+                                               "queue before dequeueing.")
+    average_rescuetime: int = Field(None, title="Average time for full rescue completion.")
+    longest_queuetime: int = Field(None, title="Longest time in queue before dequeueing.")
+    longest_rescuetime: int = Field(None, title="Longest time from queueing to full rescue completion.")
+    lost_queues: int = Field(None, title="Number of queue entries likely lost due to client leaving")
+    successful_queues: int = Field(None, title="Number of queued clients that subsequently were rescued")

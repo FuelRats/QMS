@@ -1,6 +1,7 @@
 import datetime
 import json
-from typing import Any, List
+import statistics
+from typing import Any, List, Union
 
 from app.models import Client, Statistics
 from fastapi import APIRouter, Depends, HTTPException, Response, status
@@ -206,3 +207,60 @@ def clean_queue(
     """
     task = celery_app.send_task("app.worker.clean_queue", args=[msg.msg])
     return {"msg": f"Queue cleanup initiated as task {task.id}."}
+
+
+@router.post("/statistics/", response_model=Union[schemas.Statistics, List[schemas.StatisticsEntry]], status_code=200)
+def get_statistics(
+        *,
+        db: Session = Depends(deps.get_db),
+        daterequested: datetime.date,
+        detailed: bool,
+        response: Response
+) -> Any:
+    print(f"Date requested: {daterequested} Detailed: {detailed}")
+    start = datetime.datetime.strptime(f"{daterequested} 00:00:00", '%Y-%m-%d %H:%M:%S')
+    end = datetime.datetime.strptime(f"{daterequested} 23:59:59", '%Y-%m-%d %H:%M:%S')
+    print(f"Start: {start} End: {end}")
+    stats = db.query(Statistics).filter(Statistics.arrival_time.between(start, end))
+    detail_view = []
+    avg_queue_times = []
+    avg_rescue_times = []
+    max_queue_time = 0
+    max_rescue_time = 0
+    instants = 0
+    loiterers = 0
+    lost_queues = 0
+    for row in stats:
+        if detailed:
+            deet = schemas.StatisticsEntry(uuid=row.uuid, arrival_time=row.arrival_time,
+                                           dequeued_at=row.dequeued_at, deleted_at=row.deleted_at,
+                                           purged=row.purged)
+            detail_view.append(deet)
+        else:
+            if row.dequeued_at:
+                queued_time = (row.dequeued_at - row.arrival_time).total_seconds()
+                avg_queue_times.append(queued_time)
+                if queued_time > max_queue_time:
+                    max_queue_time = queued_time
+                if queued_time < 10:
+                    instants += 1
+                else:
+                    if row.purged:
+                        lost_queues += 1
+                    else:
+                        loiterers += 1
+            if row.deleted_at:
+                rescue_time = (row.deleted_at - row.arrival_time).total_seconds()
+                avg_rescue_times.append(rescue_time)
+                if rescue_time > max_rescue_time:
+                    max_rescue_time = rescue_time
+    if not detailed:
+        queue_time = statistics.mean(avg_queue_times)
+        rescue_time = statistics.mean(avg_rescue_times)
+        return schemas.Statistics(total_clients=(instants + loiterers), instant_join=instants,
+                                  queued_join=loiterers, average_queuetime=queue_time,
+                                  average_rescuetime=rescue_time, longest_rescuetime=max_rescue_time,
+                                  longest_queuetime=max_queue_time, lost_queues=lost_queues,
+                                  successful_queues=loiterers)
+    else:
+        return detail_view
