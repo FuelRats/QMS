@@ -127,6 +127,10 @@ def remove_queue(
         db.commit()
         crud.client.remove(db=db, id=client.id)
         crud.queue.remove(db=db, id=row.id)
+        old_queue = db.query(Queue).filter(Queue.arrival_time <=
+                                           (datetime.datetime.utcnow()-datetime.timedelta(hours=24)))
+        if old_queue.count() >= 1:
+            celery_app.send_task("app.worker.clean_queue", args=["Cleanup started by stale cases."])
         return {'status': f'Success!'}
     except NoResultFound:
         raise HTTPException(status_code=404, detail="UUID not found")
