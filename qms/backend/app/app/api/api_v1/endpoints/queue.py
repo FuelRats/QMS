@@ -1,23 +1,18 @@
 import datetime
-import json
 import statistics
-from typing import Any, List, Union
+from typing import Any, List, Union, Optional
 
-from app.models import Client, Statistics
 from fastapi import APIRouter, Depends, HTTPException, Response, status
-from fastapi.encoders import jsonable_encoder
 
 from sqlalchemy import func
 from sqlalchemy.orm import Session
+from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 
 from app import crud, schemas
 from app.api import deps
 from app.core.celery_app import celery_app
-
-from app.models.queue import Queue
-from app.models.config import Config
+from app.models import Client, Statistics, Queue, Config
 from app.utils import api_query
-from sqlalchemy.orm.exc import NoResultFound, MultipleResultsFound
 
 router = APIRouter()
 
@@ -218,12 +213,16 @@ def get_statistics(
         *,
         db: Session = Depends(deps.get_db),
         daterequested: datetime.date,
+        enddate: Optional[datetime.date] = None,
         detailed: bool,
         response: Response
 ) -> Any:
     print(f"Date requested: {daterequested} Detailed: {detailed}")
     start = datetime.datetime.strptime(f"{daterequested} 00:00:00", '%Y-%m-%d %H:%M:%S')
-    end = datetime.datetime.strptime(f"{daterequested} 23:59:59", '%Y-%m-%d %H:%M:%S')
+    if enddate:
+        end = datetime.datetime.strptime(f"{enddate} 23:59:59", '%Y-%m-%d %H:%M:%S')
+    else:
+        end = datetime.datetime.strptime(f"{daterequested} 23:59:59", '%Y-%m-%d %H:%M:%S')
     print(f"Start: {start} End: {end}")
     stats = db.query(Statistics).filter(Statistics.arrival_time.between(start, end))
     detail_view = []
