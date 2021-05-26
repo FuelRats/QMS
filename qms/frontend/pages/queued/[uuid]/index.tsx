@@ -51,21 +51,21 @@ export default function Index() {
   }
 
   if (!loading && error) {
-    const lastInputString = localStorage.getItem("latestQueue");
+    const lastInputString = localStorage.getItem("latestInput");
     if (!lastInputString) {
       sendToHomeClean();
-      return;
+      return null;
     }
     let lastInput = undefined;
     try {
       lastInput = JSON.parse(lastInputString);
     } catch (e) {
       sendToHomeClean();
-      return;
+      return null;
     }
     if (typeof lastInput !== "object" || !lastInput?.input) {
       sendToHomeClean();
-      return;
+      return null;
     }
 
     try {
@@ -79,7 +79,7 @@ export default function Index() {
       });
     } catch (e) {
       sendToHomeClean();
-      return;
+      return null;
     }
   }
 
