@@ -3,6 +3,7 @@ import statistics
 from typing import Any, List, Union, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Response, status
+from pydantic import ValidationError
 
 from sqlalchemy import func
 from sqlalchemy.orm import Session
@@ -59,7 +60,12 @@ def get_queue_by_uuid(
         item = crud.queue.get(db=db, id=row.id)
         if not item:
             raise HTTPException(status_code=404, detail="UUID found, but no matching queue data")
-        return item
+        try:
+            return schemas.Queue(client=item.client, arrival_time=item.arrival_time, pending=item.pending,
+                                 in_progress=item.in_progress, dequeued_at=item.dequeued_at, uuid=item.uuid)
+        except ValidationError:
+            return schemas.Queue(client=item.client, arrival_time=item.arrival_time, pending=item.pending,
+                                 in_progress=item.in_progress, uuid=item.uuid)
     except NoResultFound:
         raise HTTPException(status_code=404, detail="UUID not found")
     except MultipleResultsFound:
