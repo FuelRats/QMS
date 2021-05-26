@@ -42,7 +42,7 @@ class QueueInDBBase(QueueBase):
     arrival_time: datetime
     pending: bool
     in_progress: bool
-    dequeued_at: datetime
+    dequeued_at: Optional[datetime] = None
     uuid: str
     client: Client
 
