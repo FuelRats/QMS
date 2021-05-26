@@ -28,7 +28,7 @@ export default async function queueClient(parent, args, context): Promise<any> {
     arrivalTime: queuedClient.data.arrival_time,
     pending: queuedClient.data.pending,
     uuid: queuedClient.data.uuid,
-    platform: queuedClient.data.client.platform,
+    platform: queuedClient.data.client.platform.toUpperCase(),
     locale: queuedClient.data.client.locale,
     codeRed: !queuedClient.data.client.o2_status,
     system: queuedClient.data.client.client_system,

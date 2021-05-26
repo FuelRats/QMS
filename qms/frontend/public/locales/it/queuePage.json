@@ -1,0 +1,13 @@
+{
+  "loading": "Caricamento del salvataggio...",
+  "queueAlert": {
+    "inQueue": "Sei nella coda di attesa!",
+    "busy": "Al momento vi è un gran numero di salvataggi in corso.",
+    "refresh": "Questa schermata si aggiornerà automaticamente e ti farà entrare non appena sarà il tuo turno."
+  },
+  "fuelAlert": {
+    "exit": "Esci al menu principale",
+    "instructions": "Per cortesia, per evitare il consumo eccessivo di carburante, esci al menu principale dove puoi vedere la tua nave nell’hangar durante l’attesa."
+  },
+  "position": "La tua posizione nella coda di attesa: {{position}}"
+}

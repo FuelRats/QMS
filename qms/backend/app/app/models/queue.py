@@ -16,4 +16,5 @@ class Queue(Base):
     arrival_time = Column(DateTime(timezone=True))
     pending = Column(Boolean)
     in_progress = Column(Boolean)
+    dequeued_at = Column(DateTime(timezone=True))
     uuid = Column(String)

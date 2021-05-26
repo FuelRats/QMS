@@ -1,5 +1,8 @@
+const { i18n } = require("./next-i18next.config");
 const { withSentryConfig } = require("@sentry/nextjs");
-const moduleExports = {};
+const moduleExports = {
+  i18n,
+};
 
 const SentryWebpackPluginOptions = {
   // Additional config options for the Sentry Webpack plugin. Keep in mind that

@@ -14,7 +14,7 @@ const SEARCH_SYSTEMS = gql`
   }
 `;
 
-export default function SystemsSearch({ onChange }) {
+export default function SystemsSearch({ onChange, label }) {
   const [open, setOpen] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState("");
   const [searchSystems, { loading: queryLoading, data, error }] =
@@ -59,7 +59,7 @@ export default function SystemsSearch({ onChange }) {
       renderInput={(params) => (
         <TextField
           {...params}
-          placeholder="Search for a system"
+          placeholder={label ?? "Search for a system"}
           variant="outlined"
           InputLabelProps={{
             shrink: true,

@@ -6,6 +6,8 @@ import { Alert, AlertTitle } from "@material-ui/lab";
 import Image from "next/image";
 import React from "react";
 import pushClientToKiwi from "../../../src/helpers/PushClientToKiwi";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "react-i18next";
 
 const GET_QUEUED_CLIENT = gql`
   query GetQueuedClient($uuid: String!) {
@@ -21,14 +23,20 @@ const GET_QUEUED_CLIENT = gql`
   }
 `;
 
+const sendToHomeClean = () => {
+  localStorage.removeItem("latestInput");
+  localStorage.removeItem("latestQueue");
+  window.location.href = "/";
+};
+
 export default function Index() {
   const router = useRouter();
   const { uuid } = router.query;
+  const { t } = useTranslation();
   const { data, loading, error } = useQuery(GET_QUEUED_CLIENT, {
     variables: { uuid },
     pollInterval: parseInt(process.env.NEXT_PUBLIC_QUEUE_POLL_INTERVAL),
     fetchPolicy: "no-cache",
-    skip: !uuid,
   });
 
   if (!loading && !error && data?.queuedClient?.pending === true) {
@@ -44,35 +52,41 @@ export default function Index() {
 
   if (!loading && error) {
     const lastInputString = localStorage.getItem("latestQueue");
-    if (lastInputString) {
-      const lastInput = JSON.parse(lastInputString);
-      if (lastInput?.input) {
-        try {
-          pushClientToKiwi({
-            system: lastInput.input.system,
-            platform: lastInput.input.platform,
-            cmdr: lastInput.input.cmdr,
-            timer: lastInput.input.codeRed,
-            odyssey: lastInput.input.odyssey,
-            submit: true,
-          });
-        } catch (e) {
-          localStorage.removeItem("latestInput");
-          localStorage.removeItem("latestQueue");
-          window.location.href = "/";
-        }
-      } else {
-        localStorage.removeItem("latestInput");
-        localStorage.removeItem("latestQueue");
-        window.location.href = "/";
-      }
+    if (!lastInputString) {
+      sendToHomeClean();
+      return;
+    }
+    let lastInput = undefined;
+    try {
+      lastInput = JSON.parse(lastInputString);
+    } catch (e) {
+      sendToHomeClean();
+      return;
+    }
+    if (typeof lastInput !== "object" || !lastInput?.input) {
+      sendToHomeClean();
+      return;
+    }
+
+    try {
+      pushClientToKiwi({
+        system: lastInput.input.system,
+        platform: lastInput.input.platform,
+        cmdr: lastInput.input.cmdr,
+        timer: lastInput.input.codeRed,
+        odyssey: lastInput.input.odyssey,
+        submit: true,
+      });
+    } catch (e) {
+      sendToHomeClean();
+      return;
     }
   }
 
   if (loading || !data) {
     return (
       <Container maxWidth="xs">
-        <Typography>Loading your rescue....</Typography>
+        <Typography>{t("queuePage:loading")}</Typography>
       </Container>
     );
   }
@@ -85,29 +99,35 @@ export default function Index() {
       <Box my={2}>
         <Alert severity="info">
           <AlertTitle>
-            <strong>You are in the Queue!</strong>
+            <strong>{t("queuePage:queueAlert.inQueue")}</strong>
           </AlertTitle>
-          It is currently extremely busy with rescue cases.
+          {t("queuePage:queueAlert.busy")}
           <br />
-          This screen will refresh automatically and let you in once it&apos;s
-          your turn.
+          {t("queuePage:queueAlert.refresh")}
         </Alert>
       </Box>
       <Box my={2}>
         <Alert severity="warning">
           <AlertTitle>
-            <strong>Exit to the main menu</strong>
+            <strong>{t("queuePage:fuelAlert.exit")}</strong>
           </AlertTitle>
-          To prevent burning unnecessary fuel, please exit to the main menu
-          where you can see your ship in the hangar while you wait here.
+          {t("queuePage:fuelAlert.instructions")}
         </Alert>
       </Box>
       <Typography variant="h5" component="h3">
-        Your position in the queue: {data.queuedClient.position}
+        {t("queuePage:position", { position: data.queuedClient.position })}
       </Typography>
       <Box width="100%" my={2}>
         <LinearProgress />
       </Box>
     </Container>
   );
+}
+
+export async function getServerSideProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["common", "queuePage"])),
+    },
+  };
 }
