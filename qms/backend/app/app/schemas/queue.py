@@ -107,8 +107,9 @@ class Statistics(BaseModel):
     instant_join: int = Field(None, title="Total number of clients immediately passed to IRC.")
     queued_join: int = Field(None, title="Total number of clients that waited before joining IRC.")
     average_queuetime: int = Field(None, title="How many seconds the average queue entry was in "
-                                               "queue before dequeueing.")
-    average_rescuetime: int = Field(None, title="Average time for full rescue completion.")
+                                               "queue before dequeueing. Returns -1 if unable to compute.")
+    average_rescuetime: int = Field(None, title="Average time for full rescue completion. "
+                                                "Returns -1 if unable to compute.")
     longest_queuetime: int = Field(None, title="Longest time in queue before dequeueing.")
     longest_rescuetime: int = Field(None, title="Longest time from queueing to full rescue completion.")
     lost_queues: int = Field(None, title="Number of queue entries likely lost due to client leaving")

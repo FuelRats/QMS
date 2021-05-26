@@ -255,12 +255,20 @@ def get_statistics(
                 if rescue_time > max_rescue_time:
                     max_rescue_time = rescue_time
     if not detailed:
-        queue_time = statistics.mean(avg_queue_times)
-        rescue_time = statistics.mean(avg_rescue_times)
-        return schemas.Statistics(total_clients=(instants + loiterers), instant_join=instants,
-                                  queued_join=loiterers, average_queuetime=queue_time,
-                                  average_rescuetime=rescue_time, longest_rescuetime=max_rescue_time,
-                                  longest_queuetime=max_queue_time, lost_queues=lost_queues,
-                                  successful_queues=loiterers)
+        try:
+            queue_time = statistics.mean(avg_queue_times)
+        except statistics.StatisticsError:
+            print("Unable to calculate a mean time for queueing, no entries!")
+            queue_time = -1
+        try:
+            rescue_time = statistics.mean(avg_rescue_times)
+        except statistics.StatisticsError:
+            print("Unable to calculate a mean time for rescue time, no entries!")
+            rescue_time = -1
+        return schemas.Statistics(total_clients=(instants + loiterers + lost_queues),
+                                  instant_join=instants, queued_join=loiterers,
+                                  average_queuetime=queue_time, average_rescuetime=rescue_time,
+                                  longest_rescuetime=max_rescue_time, longest_queuetime=max_queue_time,
+                                  lost_queues=lost_queues, successful_queues=loiterers)
     else:
         return detail_view
