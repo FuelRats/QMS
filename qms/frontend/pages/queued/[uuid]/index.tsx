@@ -8,6 +8,7 @@ import React from "react";
 import pushClientToKiwi from "../../../src/helpers/PushClientToKiwi";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "react-i18next";
+import * as Sentry from "@sentry/nextjs";
 
 const GET_QUEUED_CLIENT = gql`
   query GetQueuedClient($uuid: String!) {
@@ -39,6 +40,14 @@ export default function Index() {
     fetchPolicy: "no-cache",
   });
 
+  const scope = new Sentry.Scope();
+  if (typeof localStorage !== "undefined") {
+    scope.setContext("localStorage", {
+      latestInput: localStorage.getItem("latestInput"),
+      latestQueue: localStorage.getItem("latestQueue"),
+    });
+  }
+
   if (!loading && !error && data?.queuedClient?.pending === true) {
     pushClientToKiwi({
       system: data.queuedClient.system,
@@ -53,6 +62,10 @@ export default function Index() {
   if (!loading && error) {
     const lastInputString = localStorage.getItem("latestInput");
     if (!lastInputString) {
+      Sentry.captureMessage(
+        "Client sent home as no latestInput available",
+        scope
+      );
       sendToHomeClean();
       return null;
     }
@@ -60,15 +73,24 @@ export default function Index() {
     try {
       lastInput = JSON.parse(lastInputString);
     } catch (e) {
+      Sentry.captureException(e, scope);
       sendToHomeClean();
       return null;
     }
     if (typeof lastInput !== "object" || !lastInput?.input) {
+      Sentry.captureMessage(
+        "Client sent home as latestInput is incorrect",
+        scope
+      );
       sendToHomeClean();
       return null;
     }
 
     try {
+      Sentry.captureMessage(
+        "Client pushed to Kiwi as backup with lastInput",
+        scope
+      );
       pushClientToKiwi({
         system: lastInput.input.system,
         platform: lastInput.input.platform,
@@ -78,6 +100,7 @@ export default function Index() {
         submit: true,
       });
     } catch (e) {
+      Sentry.captureException(e, scope);
       sendToHomeClean();
       return null;
     }
