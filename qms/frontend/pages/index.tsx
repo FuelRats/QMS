@@ -177,7 +177,13 @@ export default function Home() {
   return (
     <Container maxWidth="xs">
       <Box my={2} display="flex" justifyContent="center" alignItems="center">
-        <Image src="/logo.svg" layout="fixed" width={250} height={250} />
+        <Image
+          src="/logo.svg"
+          layout="fixed"
+          width={250}
+          height={250}
+          alt="Fuel Rats logo"
+        />
       </Box>
       <Typography component="h1" variant="h5">
         {t("rescueForm:timer?")}
@@ -259,17 +265,37 @@ export default function Home() {
 
       {platform === "PC" && (
         <Box my={2}>
-          <Typography>{t("rescueForm:platform.odyssey?")}</Typography>
-          <RadioGroup row value={odyssey} onChange={handleOdysseyChange}>
-            <FormControlLabel
-              value={EmptyBoolean.TRUE}
-              control={<Radio />}
-              label={t("common:yes")}
-            />
+          <Typography>{t("rescueForm:platform.which?")}</Typography>
+          <RadioGroup value={odyssey} onChange={handleOdysseyChange}>
             <FormControlLabel
               value={EmptyBoolean.FALSE}
               control={<Radio />}
-              label={t("common:no")}
+              label={
+                <Box my={2}>
+                  <Image
+                    src="/horizons.png"
+                    layout="fixed"
+                    alt="Horizons"
+                    width={250}
+                    height={179}
+                  />
+                </Box>
+              }
+            />
+            <FormControlLabel
+              value={EmptyBoolean.TRUE}
+              control={<Radio />}
+              label={
+                <Box my={2}>
+                  <Image
+                    src="/odyssey.png"
+                    layout="fixed"
+                    alt="Odyssey"
+                    width={250}
+                    height={179}
+                  />
+                </Box>
+              }
             />
           </RadioGroup>
         </Box>

@@ -15,7 +15,10 @@
   },
   "platform" : {
     "odyssey?": "Are you playing on Odyssey?",
-    "header": "Platform"
+    "which?": "In which mode are you playing?",
+    "header": "Platform",
+    "odyssey": "Odyssey",
+    "horizons": "Horizons"
   },
   "start": "Start"
 }
