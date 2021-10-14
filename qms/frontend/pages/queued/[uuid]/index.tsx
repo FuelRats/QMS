@@ -1,14 +1,20 @@
-import { Box, Container, LinearProgress, Typography } from "@material-ui/core";
 import { gql } from "@apollo/client/core";
 import { useRouter } from "next/router";
 import { useQuery } from "@apollo/client";
-import { Alert, AlertTitle } from "@material-ui/lab";
 import Image from "next/image";
 import React from "react";
 import pushClientToKiwi from "../../../src/helpers/PushClientToKiwi";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "react-i18next";
 import * as Sentry from "@sentry/nextjs";
+import {
+  Alert,
+  AlertTitle,
+  Box,
+  Container,
+  LinearProgress,
+  Typography,
+} from "@mui/material";
 
 const GET_QUEUED_CLIENT = gql`
   query GetQueuedClient($uuid: String!) {
