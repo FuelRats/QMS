@@ -2,13 +2,14 @@ import SystemsSearch from "../src/components/SystemsSearch";
 import { gql } from "@apollo/client/core";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import { Alert, AlertTitle } from "@mui/lab";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import pushClientToKiwi from "../src/helpers/PushClientToKiwi";
 import { Trans, useTranslation } from "react-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import {
+  Alert,
+  AlertTitle,
   Backdrop,
   Box,
   Button,
