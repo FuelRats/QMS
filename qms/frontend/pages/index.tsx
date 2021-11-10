@@ -107,7 +107,7 @@ export default function Home() {
     }
   }, [findQueueUuid]);
 
-  const handlePlatformChange = (event) => {
+  const handlePlatformChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPlatform(event.target.value);
     if (platform !== "PC") {
       setOdyssey(EmptyBoolean.EMPTY);
@@ -167,7 +167,7 @@ export default function Home() {
   if (queueNewClientError || queuedClient?.queueClient.message === "go_ahead") {
     pushClientToKiwi({
       system: system,
-      platform: platform,
+      platform: platform.toUpperCase() as unknown as "PC" | "XB" | "PS4",
       cmdr: name,
       timer: codeRed === EmptyBoolean.TRUE,
       odyssey: odyssey === EmptyBoolean.TRUE,
