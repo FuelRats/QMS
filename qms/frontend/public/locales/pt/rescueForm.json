@@ -15,6 +15,7 @@
   },
   "platform" : {
     "odyssey?": "Está a jogar na Odyssey?",
+    "which?": "Em que modo está a jogar?",
     "header": "Plataforma"
   },
   "start": "Inicio"

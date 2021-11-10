@@ -1,9 +1,9 @@
 // import '../styles/globals.css'
-import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 
 import theme from "../src/theme";
 import { appWithTranslation } from "next-i18next";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 
 const client = new ApolloClient({
   uri: "/api/graphql",

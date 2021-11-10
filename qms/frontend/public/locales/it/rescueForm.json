@@ -15,6 +15,7 @@
   },
   "platform" : {
     "odyssey?": "Stai giocando con Odissey?",
+    "which?": "In quale modalità stai giocando?",
     "header": "Piattaforma"
   },
   "start": "Inizio"

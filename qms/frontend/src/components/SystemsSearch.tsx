@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import { useLazyQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
 import * as _ from "lodash";
+import { Autocomplete, CircularProgress, TextField } from "@mui/material";
 
 const SEARCH_SYSTEMS = gql`
   query SearchSystems($search: String!) {
@@ -46,7 +44,7 @@ export default function SystemsSearch({ onChange, label }) {
       onClose={() => {
         setOpen(false);
       }}
-      getOptionSelected={(option, newValue) => option.name === newValue.name}
+      isOptionEqualToValue={(option, newValue) => option.name === newValue.name}
       getOptionLabel={(option) => option.name ?? searchValue}
       options={data?.systems ?? []}
       loading={loading}

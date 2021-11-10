@@ -9,10 +9,11 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.16",
-    "@material-ui/core": "^4.11.4",
-    "@material-ui/lab": "^4.0.0-alpha.58",
-    "@material-ui/styles": "^4.11.4",
-    "@sentry/nextjs": "^6.3.6",
+    "@mui/lab": "^5.0.0-alpha.50",
+    "@mui/material": "^5.0.3",
+    "@mui/styled-engine-sc": "latest",
+    "@mui/styles": "latest",
+    "@sentry/nextjs": "^6.13.3",
     "@sentry/react": "^6.3.6",
     "@sentry/tracing": "^6.3.6",
     "apollo-server-micro": "^2.24.0",
@@ -20,16 +21,16 @@
     "graphql": "^15.5.0",
     "i18next": "^20.2.4",
     "lodash": "^4.17.21",
-    "next": "10.2.0",
-    "next-i18next": "^8.3.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "next": "^11.1.2",
+    "next-i18next": "^8.9.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-i18next": "^11.8.15",
-    "styled-components": "^5.2.3"
+    "styled-components": "^5.3.1"
   },
   "devDependencies": {
     "@types/graphql": "^14.5.0",
-    "@types/react": "^17.0.4",
+    "@types/react": "^17.0.29",
     "@typescript-eslint/eslint-plugin": "^4.23.0",
     "@typescript-eslint/parser": "^4.23.0",
     "apollo": "^2.33.2",
@@ -46,6 +47,6 @@
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "2.3.0",
-    "typescript": "^4.2.4"
+    "typescript": "^4.3.2"
   }
 }
