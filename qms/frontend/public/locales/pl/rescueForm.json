@@ -1,0 +1,22 @@
+{
+  "timer?": "czy pojawiło się awaryjne odliczanie tlenu?",
+  "exitAlert": {
+    "title": "Wyjście do głównego menu",
+    "exitInstructions": "Proszę od <strong>razu</strong> wylogować się z gry naciskając OPTIONS i wybierając EXIT oraz EXIT TO MAIN MENU gdzie widac statek w hangarze"
+  },
+  "infoAlert": {
+    "enterGameWarning": "Proszę nie logować się ponownie do gry dopóki nie powiemy.",
+    "gatherInfo": "<strong>Nie logując się do gry by sprawdzić,</strong0> proszę zapisać ile czasu zostało na liczniku tlenu oraz orientacyjnie w którym miejscu statek się znajdował. Informacje te będą cenne dla koordynatora Twojej akcji ratunkowej."
+  },
+  "cmdrName": "",
+  "system": {
+    "systemName": "Nazwa systemu ",
+    "searchLabel": "Wyszukiwanie systemu"
+  },
+  "platform": {
+    "odyssey?": "Czy jest to ekspansja Odyssey?",
+    "which?": "",
+    "header": "Wersja"
+  },
+  "start": "Start"
+}

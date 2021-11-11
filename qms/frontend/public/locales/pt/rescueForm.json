@@ -13,7 +13,7 @@
     "systemName": "Nome do sistema",
     "searchLabel": "procura de um sistema"
   },
-  "platform" : {
+  "platform": {
     "odyssey?": "Está a jogar na Odyssey?",
     "which?": "Em que modo está a jogar?",
     "header": "Plataforma"

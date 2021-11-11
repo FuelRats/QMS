@@ -1,0 +1,13 @@
+{
+  "loading": "Načítám chat s tvoji záchranou...",
+  "queueAlert": {
+    "inQueue": "Jsi v pořadí!",
+    "busy": "Máme aktuálně extrémně mnoho případů.",
+    "refresh": "Toto okno se automaticky aktualizuje a dáme ti vědět až budeš na řadě."
+  },
+  "fuelAlert": {
+    "exit": "Odejdi ze hry do hlavního menu",
+    "instructions": "Aby jsme předešli zbytečnému plýtvání paliva mezitím co čekáš, poprosím tě aby jsi odešel hlavního menu kde uvidíš svoji loď v hangáru"
+  },
+  "position": "Tvá pozice v pořadí: {{position}}"
+}

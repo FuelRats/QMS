@@ -1,0 +1,13 @@
+{
+  "loading": "Ładujemy Twoją akcje ratunkową...",
+  "queueAlert": {
+    "inQueue": "Jesteś w kolejce oczekujących",
+    "busy": "Mamy w tym momencie bardzo dużo akcji ratunkowych ",
+    "refresh": "Ten ekran odświeży się automatycznie jak tylko będzie Twoja kolej"
+  },
+  "fuelAlert": {
+    "exit": "Wyjście do głównego menu",
+    "instructions": "Aby nie tracić cennego paliwa proszę wyjśc do menu głównego gdzie widać statek w hangarze"
+  },
+  "position": "Twoja pozycja w kolejce oczekujących {{position}}"
+}

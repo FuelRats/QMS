@@ -1,0 +1,13 @@
+{
+  "loading": "Cargando su rescate....",
+  "queueAlert": {
+    "inQueue": "Estas en lista de espera!",
+    "busy": "Actualmente estamos muy ocupados con los rescates.",
+    "refresh": "Esta pantalla se refrezcará automaticamente y te dejará entrar cuando sea tu turno."
+  },
+  "fuelAlert": {
+    "exit": "Salir al Menú Principal",
+    "instructions": "Para prevenir el uso de combustible, mientras espera, por favor salga al menú principal donde puede ver su nave en el hangar."
+  },
+  "position": "Su posición en la lista de espera: {{position}}"
+}

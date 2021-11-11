@@ -1,0 +1,22 @@
+{
+  "timer?": "Látsz egy 'oxygen depleted' (maradandó oxigén) leszámoló stoppert?",
+  "exitAlert": {
+    "title": "Kilépés a fő menühöz",
+    "exitInstructions": "Kérlek <strong>azonnal</strong> lépj ki a fő menühöz ahol látható a hajód a hangárban!"
+  },
+  "infoAlert": {
+    "enterGameWarning": "Ne lépj vissza a játékba, amíg nem utasítanak rá.",
+    "gatherInfo": "<strong>NE jelentkezz be ellenőrizni, de ha emlékszel rá,</strong0> írd le hogy menyi idő maradt az oxigént leszámoló stopperen és hogy kb hol voltál a csillagrendszerben. Kérdezni fogják tőled a mentés folyamán."
+  },
+  "cmdrName": "",
+  "system": {
+    "systemName": "Rendszer Név",
+    "searchLabel": "Rákeresés egy rendszerre"
+  },
+  "platform": {
+    "odyssey?": "",
+    "which?": "",
+    "header": "Emelvény"
+  },
+  "start": "Start"
+}

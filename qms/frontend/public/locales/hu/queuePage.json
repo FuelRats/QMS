@@ -1,0 +1,13 @@
+{
+  "loading": "",
+  "queueAlert": {
+    "inQueue": "",
+    "busy": "",
+    "refresh": ""
+  },
+  "fuelAlert": {
+    "exit": "Kilépés a fő menühöz",
+    "instructions": ""
+  },
+  "position": ""
+}

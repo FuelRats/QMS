@@ -1,0 +1,22 @@
+{
+  "timer?": "Vidíš časovač kde je napsáno \"oxygen depleted\"?",
+  "exitAlert": {
+    "title": "Odejdi ze hry do hlavního menu",
+    "exitInstructions": "Prosím, <strong>okamžitě</strong> odejdi ze hry do hlavního menu kde uvidíš svoji loď v hangáru!"
+  },
+  "infoAlert": {
+    "enterGameWarning": "Nepřipojuj se do hry dokud ti to výslovně neřeknu",
+    "gatherInfo": "Sepiš si kolik ti zbývalo kyslíku na časovači a kde jsi přibližně byl v systému, na tyto otázky se tě budeme ptát během záchrany. <strong>Nepřipojuj se do hry pro zjištění těchto informací</strong0>"
+  },
+  "cmdrName": "",
+  "system": {
+    "systemName": "Jméno Systému",
+    "searchLabel": "Vyhledat jméno systému"
+  },
+  "platform": {
+    "odyssey?": "Hraješ s DLC Odyssey?",
+    "which?": "",
+    "header": "Platforma"
+  },
+  "start": "Start"
+}

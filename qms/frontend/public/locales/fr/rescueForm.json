@@ -1,0 +1,22 @@
+{
+  "timer?": "Voyez-vous un minuteur 'oxygène épuisé'?",
+  "exitAlert": {
+    "title": "Revenez au menu principal",
+    "exitInstructions": "Veuillez <strong>immédiatement</strong> revenir au menu principal, là où vous pouvez voir votre vaisseau dans un hangar!"
+  },
+  "infoAlert": {
+    "enterGameWarning": "Ne retournez pas en jeu a moins qu'on vous le demande.",
+    "gatherInfo": "<strong>Ne vous connectez PAS pour y regarder,</strong0> mais prenez note quelque part du temps qu'il restait sur le minuteur d'oxygène et votre position approximative dans le système. Cela va vous être demandé pendant le sauvetage."
+  },
+  "cmdrName": "",
+  "system": {
+    "systemName": "Nom du Système",
+    "searchLabel": "Chercher un système"
+  },
+  "platform": {
+    "odyssey?": "Jouez-vous sur Odyssey?",
+    "which?": "",
+    "header": "Plateforme"
+  },
+  "start": "Démarrer"
+}

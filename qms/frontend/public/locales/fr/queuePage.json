@@ -1,0 +1,13 @@
+{
+  "loading": "Chargement de votre sauvetage....",
+  "queueAlert": {
+    "inQueue": "Vous êtes dans la file!",
+    "busy": "Nous avons actuellement un grand nombre de sauvetages en cours.",
+    "refresh": "Cet écran va se rafraichir automatiquement et vous ferra entrez lorsque ce sera votre tour."
+  },
+  "fuelAlert": {
+    "exit": "Revenez au menu principal",
+    "instructions": "Pour éviter de brûler plus de carburant que nécessaire, veuillez revenir au menu principal, là où vous pouvez voir votre vaisseau dans un hangar pendant que vous attendez ici."
+  },
+  "position": "Votre position dans la file: {{position}}"
+}

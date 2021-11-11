@@ -13,7 +13,7 @@
     "systemName": "Systemname",
     "searchLabel": "Suche ein System"
   },
-  "platform" : {
+  "platform": {
     "odyssey?": "Spielst du die Odyssey Erweiterung?",
     "which?": "In welchem Modus spielen Sie?",
     "header": "Platform"
