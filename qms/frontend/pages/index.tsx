@@ -93,6 +93,7 @@ export default function Home() {
         timer: alreadyQueuedClient.queuedClient.codeRed,
         odyssey: alreadyQueuedClient.queuedClient.odyssey,
         submit: true,
+        time: Date.now(),
       });
     }
   }
