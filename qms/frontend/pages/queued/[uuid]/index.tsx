@@ -105,6 +105,7 @@ export default function Index() {
         timer: lastInput.input.codeRed,
         odyssey: lastInput.input.odyssey,
         submit: true,
+        time: Date.now(),
       });
     } catch (e) {
       Sentry.captureException(e, scope);
