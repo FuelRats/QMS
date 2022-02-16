@@ -173,6 +173,7 @@ export default function Home() {
       timer: codeRed === EmptyBoolean.TRUE,
       odyssey: odyssey === EmptyBoolean.TRUE,
       submit: true,
+      time: Date.now(),
     });
   }
 
