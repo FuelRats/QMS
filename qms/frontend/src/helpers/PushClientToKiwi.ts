@@ -5,6 +5,7 @@ export default function pushClientToKiwi(prefilledData: {
   timer: boolean;
   odyssey: boolean;
   submit: boolean;
+  time: number;
 }) {
   window.location.href =
     process.env.NEXT_PUBLIC_KIWI_URL +
