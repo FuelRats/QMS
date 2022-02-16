@@ -62,6 +62,7 @@ export default function Index() {
       timer: data.queuedClient.codeRed,
       odyssey: data.queuedClient.odyssey,
       submit: true,
+      time: Date.now(),
     });
   }
 
