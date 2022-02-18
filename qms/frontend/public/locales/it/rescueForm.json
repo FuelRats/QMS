@@ -1,5 +1,5 @@
 {
-  "timer?": "Vedi un timer con su scritto “OXYGEN DEPLETED”?",
+  "timer": "Vedi un timer con su scritto “OXYGEN DEPLETED”?",
   "exitAlert": {
     "title": "Esci al menu principale",
     "exitInstructions": "Per cortesia, esci al menu principale dove puoi vedere la tua nave nell’hangar <strong>immediatamente!<strong>"
@@ -13,7 +13,7 @@
     "systemName": "Nome del sistema",
     "searchLabel": "Cerca il sistema"
   },
-  "platform" : {
+  "platform": {
     "odyssey?": "Stai giocando con Odissey?",
     "which?": "In quale modalità stai giocando?",
     "header": "Piattaforma"

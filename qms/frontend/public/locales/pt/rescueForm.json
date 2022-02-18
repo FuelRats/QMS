@@ -1,5 +1,5 @@
 {
-  "timer?": "Vê um temporizador 'oxigénio de emergência'?",
+  "timer": "Vê um temporizador 'oxigénio de emergência'?",
   "exitAlert": {
     "title": "Por favor saída para o menu principal",
     "exitInstructions": "Por favor saída para o menu principal  onde vê a sua nave no hangar <strong>imediatamente</strong>!"
@@ -13,7 +13,7 @@
     "systemName": "Nome do sistema",
     "searchLabel": "procura de um sistema"
   },
-  "platform" : {
+  "platform": {
     "odyssey?": "Está a jogar na Odyssey?",
     "which?": "Em que modo está a jogar?",
     "header": "Plataforma"
