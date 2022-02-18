@@ -1,5 +1,5 @@
 {
-  "timer?": "Do you see an 'oxygen depleted' timer?",
+  "timer": "Do you see an 'oxygen depleted' timer?",
   "exitAlert": {
     "title": "EXIT TO MAIN MENU",
     "exitInstructions": "Please exit to the main menu where you can see your ship in the hangar <strong>immediately</strong>!"
@@ -13,7 +13,7 @@
     "systemName": "System Name",
     "searchLabel": "Search for a system"
   },
-  "platform" : {
+  "platform": {
     "odyssey?": "Are you playing on Odyssey?",
     "which?": "In which mode are you playing?",
     "header": "Platform"

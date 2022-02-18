@@ -117,7 +117,7 @@ export default function Index() {
   if (loading || !data) {
     return (
       <Container maxWidth="xs">
-        <Typography>{t("queuePage:loading")}</Typography>
+        <Typography>{t<string>("queuePage:loading")}</Typography>
       </Container>
     );
   }
@@ -130,23 +130,25 @@ export default function Index() {
       <Box my={2}>
         <Alert severity="info">
           <AlertTitle>
-            <strong>{t("queuePage:queueAlert.inQueue")}</strong>
+            <strong>{t<string>("queuePage:queueAlert.inQueue")}</strong>
           </AlertTitle>
-          {t("queuePage:queueAlert.busy")}
+          {t<string>("queuePage:queueAlert.busy")}
           <br />
-          {t("queuePage:queueAlert.refresh")}
+          {t<string>("queuePage:queueAlert.refresh")}
         </Alert>
       </Box>
       <Box my={2}>
         <Alert severity="warning">
           <AlertTitle>
-            <strong>{t("queuePage:fuelAlert.exit")}</strong>
+            <strong>{t<string>("queuePage:fuelAlert.exit")}</strong>
           </AlertTitle>
-          {t("queuePage:fuelAlert.instructions")}
+          {t<string>("queuePage:fuelAlert.instructions")}
         </Alert>
       </Box>
       <Typography variant="h5" component="h3">
-        {t("queuePage:position", { position: data.queuedClient.position })}
+        {t<string>("queuePage:position", {
+          position: data.queuedClient.position,
+        })}
       </Typography>
       <Box width="100%" my={2}>
         <LinearProgress />

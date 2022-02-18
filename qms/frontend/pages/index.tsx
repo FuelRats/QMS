@@ -189,7 +189,7 @@ export default function Home() {
         />
       </Box>
       <Typography component="h1" variant="h5">
-        {t("rescueForm:timer?")}
+        {t<string>("rescueForm:timer")}
       </Typography>
       <RadioGroup
         value={codeRed}
@@ -199,12 +199,12 @@ export default function Home() {
       >
         <FormControlLabel
           control={<Radio />}
-          label={t("common:yes")}
+          label={t<string>("common:yes")}
           value={EmptyBoolean.TRUE}
         />
         <FormControlLabel
           control={<Radio />}
-          label={t("common:no")}
+          label={t<string>("common:no")}
           value={EmptyBoolean.FALSE}
         />
       </RadioGroup>
@@ -213,7 +213,7 @@ export default function Home() {
           <Box my={2}>
             <Alert severity="error">
               <AlertTitle>
-                {t("rescueForm:exitAlert.title").toUpperCase()}
+                {t<string>("rescueForm:exitAlert.title").toUpperCase()}
               </AlertTitle>
               <Trans
                 i18nKey="rescueForm:exitAlert.exitInstructions"
@@ -223,7 +223,7 @@ export default function Home() {
           </Box>
           <Box my={2}>
             <Alert severity="warning">
-              {t("rescueForm:infoAlert.enterGameWarning")}
+              {t<string>("rescueForm:infoAlert.enterGameWarning")}
               <br />
               <br />
               <Trans
@@ -236,7 +236,7 @@ export default function Home() {
       )}
 
       <Box my={2}>
-        <Typography>{t("rescueForm:cmdrName")}</Typography>
+        <Typography>{t<string>("rescueForm:cmdrName")}</Typography>
         <TextField
           placeholder="Surly Badger"
           fullWidth
@@ -247,14 +247,14 @@ export default function Home() {
       </Box>
 
       <Box my={2}>
-        <Typography>{t("rescueForm:system.systemName")}</Typography>
+        <Typography>{t<string>("rescueForm:system.systemName")}</Typography>
         <SystemsSearch
           onChange={handleSystemChange}
-          label={t("rescueForm:system.searchLabel")}
+          label={t<string>("rescueForm:system.searchLabel")}
         />
       </Box>
 
-      <Typography>{t("rescueForm:platform.header")}</Typography>
+      <Typography>{t<string>("rescueForm:platform.header")}</Typography>
       <RadioGroup
         value={platform}
         aria-label="large primary button group"
@@ -268,7 +268,7 @@ export default function Home() {
 
       {platform === "PC" && (
         <Box my={2}>
-          <Typography>{t("rescueForm:platform.which?")}</Typography>
+          <Typography>{t<string>("rescueForm:platform.which?")}</Typography>
           <RadioGroup value={odyssey} onChange={handleOdysseyChange}>
             <FormControlLabel
               value={EmptyBoolean.FALSE}
@@ -313,7 +313,7 @@ export default function Home() {
           size="large"
           color="secondary"
         >
-          {t("rescueForm:start")}
+          {t<string>("rescueForm:start")}
         </Button>
       </Box>
       <Backdrop open={loading}>

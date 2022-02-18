@@ -1,5 +1,5 @@
 {
-  "timer?": "Siehst du einen 'Sauerstoff leer in' Zähler?",
+  "timer": "Siehst du einen 'Sauerstoff leer in' Zähler?",
   "exitAlert": {
     "title": "Gehe ins Hauptmenü",
     "exitInstructions": "Bitte gehe sofort aus dem Spiel raus ins Hauptmenü, wo du dein Schiff im Hangar siehst."
@@ -13,7 +13,7 @@
     "systemName": "Systemname",
     "searchLabel": "Suche ein System"
   },
-  "platform" : {
+  "platform": {
     "odyssey?": "Spielst du die Odyssey Erweiterung?",
     "which?": "In welchem Modus spielen Sie?",
     "header": "Platform"
