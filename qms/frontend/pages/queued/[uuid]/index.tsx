@@ -60,7 +60,7 @@ export default function Index() {
       platform: data.queuedClient.platform,
       cmdr: data.queuedClient.cmdr,
       timer: data.queuedClient.codeRed,
-      odyssey: data.queuedClient.odyssey,
+      version: data.queuedClient.odyssey,
       submit: true,
     });
   }
@@ -102,7 +102,7 @@ export default function Index() {
         platform: lastInput.input.platform,
         cmdr: lastInput.input.cmdr,
         timer: lastInput.input.codeRed,
-        odyssey: lastInput.input.odyssey,
+        version: lastInput.input.odyssey,
         submit: true,
       });
     } catch (e) {

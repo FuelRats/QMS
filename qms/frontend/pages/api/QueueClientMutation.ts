@@ -12,7 +12,7 @@ export default async function queueClient(parent, args, context): Promise<any> {
         platform: input.platform.toLowerCase(),
         locale: input.locale,
         o2_status: input.codeRed,
-        odyssey: input.odyssey,
+        odyssey: input.version,
         in_progress: false,
       },
     },
@@ -33,6 +33,6 @@ export default async function queueClient(parent, args, context): Promise<any> {
     codeRed: !queuedClient.data.client.o2_status,
     system: queuedClient.data.client.client_system,
     cmdr: queuedClient.data.client.client_name,
-    odyssey: queuedClient.data.client.odyssey,
+    version: queuedClient.data.client.odyssey,
   };
 }

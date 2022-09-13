@@ -29,13 +29,19 @@ export const typeDefs = gql`
     XB
   }
 
+  enum Version {
+    HORIZONS3
+    HORIZONS4
+    ODYSSEY
+  }
+
   input QueueClientInput {
     cmdr: String!
     system: String!
     platform: Platform!
     locale: String!
     codeRed: Boolean!
-    odyssey: Boolean!
+    version: Version
   }
 
   type QueuedClient {
@@ -49,7 +55,7 @@ export const typeDefs = gql`
     codeRed: Boolean!
     system: String!
     cmdr: String!
-    odyssey: Boolean!
+    version: Version
     position: Int!
   }
 `;

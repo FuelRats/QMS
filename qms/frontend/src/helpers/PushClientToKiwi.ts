@@ -3,7 +3,7 @@ export default function pushClientToKiwi(prefilledData: {
   platform: "PC" | "XB" | "PS4";
   cmdr: string;
   timer: boolean;
-  odyssey: boolean;
+  odyssey: "horizons3" | "horizons4" | "odyssey";
   submit: boolean;
 }) {
   window.location.href =
