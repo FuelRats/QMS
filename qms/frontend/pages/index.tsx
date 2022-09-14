@@ -278,17 +278,17 @@ export default function Home() {
             <FormControlLabel
               value={VersionInput.HORIZONS3}
               control={<Radio />}
-              label="3.8 Horizons"
+              label="Horizons (3.8)"
             />
             <FormControlLabel
               value={VersionInput.HORIZONS4}
               control={<Radio />}
-              label="4.0 Horizons"
+              label="Horizons (4.0)"
             />
             <FormControlLabel
               value={VersionInput.ODYSSEY}
               control={<Radio />}
-              label="Odyssey"
+              label="Odyssey (4.0)"
             />
           </RadioGroup>
         </Box>
