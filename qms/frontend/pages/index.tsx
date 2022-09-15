@@ -277,7 +277,6 @@ export default function Home() {
         <Box my={2}>
           <Typography>{t("rescueForm:platform.which?")}</Typography>
           <RadioGroup value={version} onChange={handleVersionChange}>
-            
             <FormControlLabel
               value={VersionInput.ODYSSEY}
               control={<Radio />}
