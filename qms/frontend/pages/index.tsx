@@ -41,7 +41,7 @@ const QUEUED_CLIENT_FIND_UUID = gql`
       system
       cmdr
       codeRed
-      odyssey
+      version
     }
   }
 `;
@@ -49,6 +49,13 @@ const QUEUED_CLIENT_FIND_UUID = gql`
 enum EmptyBoolean {
   TRUE = "TRUE",
   FALSE = "FALSE",
+  EMPTY = "EMPTY",
+}
+
+enum VersionInput {
+  ODYSSEY = "odyssey",
+  HORIZONS3 = "horizons3",
+  HORIZONS4 = "horizons4",
   EMPTY = "EMPTY",
 }
 
@@ -69,14 +76,14 @@ export default function Home() {
   const [codeRed, setCodeRed] = useState<EmptyBoolean>(EmptyBoolean.EMPTY);
   const [name, setName] = useState<string>("");
   const [system, setSystem] = useState<string>("");
-  const [odyssey, setOdyssey] = useState<EmptyBoolean>(EmptyBoolean.EMPTY);
+  const [version, setVersion] = useState<VersionInput>(VersionInput.EMPTY);
   const router = useRouter();
   const { t } = useTranslation();
   const canStart =
     platform.length &&
     name.length &&
     system.length &&
-    ((platform === "PC" && odyssey !== EmptyBoolean.EMPTY) ||
+    ((platform === "PC" && version !== VersionInput.EMPTY) ||
       platform !== "PC");
 
   if (alreadyQueuedClient) {
@@ -91,7 +98,7 @@ export default function Home() {
         platform: alreadyQueuedClient.queuedClient.platform,
         cmdr: alreadyQueuedClient.queuedClient.cmdr,
         timer: alreadyQueuedClient.queuedClient.codeRed,
-        odyssey: alreadyQueuedClient.queuedClient.odyssey,
+        odyssey: alreadyQueuedClient.queuedClient.version,
         submit: true,
         time: Date.now(),
       });
@@ -111,7 +118,7 @@ export default function Home() {
   const handlePlatformChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPlatform(event.target.value);
     if (platform !== "PC") {
-      setOdyssey(EmptyBoolean.EMPTY);
+      setVersion(VersionInput.EMPTY);
     }
   };
   const handleCodeRedChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -126,8 +133,8 @@ export default function Home() {
     setSystem(newName);
   };
 
-  const handleOdysseyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setOdyssey(event.currentTarget.value as EmptyBoolean);
+  const handleVersionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setVersion(event.currentTarget.value as VersionInput);
   };
 
   const onSubmit = async () => {
@@ -136,7 +143,7 @@ export default function Home() {
       platform,
       locale: navigator.language,
       codeRed: codeRed === EmptyBoolean.TRUE,
-      odyssey: odyssey === EmptyBoolean.TRUE,
+      version: version,
       system: system,
     };
     localStorage.setItem(
@@ -171,7 +178,7 @@ export default function Home() {
       platform: platform.toUpperCase() as unknown as "PC" | "XB" | "PS4",
       cmdr: name,
       timer: codeRed === EmptyBoolean.TRUE,
-      odyssey: odyssey === EmptyBoolean.TRUE,
+      odyssey: version !== VersionInput.EMPTY ? version : "horizons3",
       submit: true,
       time: Date.now(),
     });
@@ -269,36 +276,21 @@ export default function Home() {
       {platform === "PC" && (
         <Box my={2}>
           <Typography>{t("rescueForm:platform.which?")}</Typography>
-          <RadioGroup value={odyssey} onChange={handleOdysseyChange}>
+          <RadioGroup value={version} onChange={handleVersionChange}>
             <FormControlLabel
-              value={EmptyBoolean.FALSE}
+              value={VersionInput.HORIZONS3}
               control={<Radio />}
-              label={
-                <Box my={2}>
-                  <Image
-                    src="/horizons.png"
-                    layout="fixed"
-                    alt="Horizons"
-                    width={250}
-                    height={179}
-                  />
-                </Box>
-              }
+              label="Horizons (3.8)"
             />
             <FormControlLabel
-              value={EmptyBoolean.TRUE}
+              value={VersionInput.HORIZONS4}
               control={<Radio />}
-              label={
-                <Box my={2}>
-                  <Image
-                    src="/odyssey.png"
-                    layout="fixed"
-                    alt="Odyssey"
-                    width={250}
-                    height={179}
-                  />
-                </Box>
-              }
+              label="Horizons (4.0)"
+            />
+            <FormControlLabel
+              value={VersionInput.ODYSSEY}
+              control={<Radio />}
+              label="Odyssey (4.0)"
             />
           </RadioGroup>
         </Box>

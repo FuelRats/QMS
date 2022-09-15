@@ -10,7 +10,7 @@ interface QueueItem {
     client_system: string;
     client_name: string;
     o2_status: boolean;
-    odyssey: boolean;
+    odyssey: "horizons3" | "horizons4" | "odyssey";
     locale: boolean;
   };
 }
@@ -33,6 +33,7 @@ export default async function queuedClient(
   );
 
   const currentRescue = result.data;
+
   return {
     pending: currentRescue.pending,
     uuid: currentRescue.uuid,
@@ -41,7 +42,7 @@ export default async function queuedClient(
     cmdr: currentRescue.client.client_name,
     codeRed: currentRescue.client.o2_status,
     inProgress: currentRescue.in_progress,
-    odyssey: currentRescue.client.odyssey,
+    version: currentRescue.client.odyssey,
     position: async (): Promise<number> => {
       const result = await axios.get<QueueItem[]>(
         process.env.QMS_URL + "/api/v1/queue/",
