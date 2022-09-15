@@ -41,7 +41,7 @@ const QUEUED_CLIENT_FIND_UUID = gql`
       system
       cmdr
       codeRed
-      version
+      odyssey
     }
   }
 `;
