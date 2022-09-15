@@ -60,7 +60,7 @@ export default function Index() {
       platform: data.queuedClient.platform,
       cmdr: data.queuedClient.cmdr,
       timer: data.queuedClient.codeRed,
-      version: data.queuedClient.odyssey,
+      odyssey: data.queuedClient.odyssey,
       submit: true,
       time: Date.now(),
     });
@@ -103,7 +103,7 @@ export default function Index() {
         platform: lastInput.input.platform,
         cmdr: lastInput.input.cmdr,
         timer: lastInput.input.codeRed,
-        version: lastInput.input.odyssey,
+        odyssey: lastInput.input.odyssey,
         submit: true,
         time: Date.now(),
       });
