@@ -277,10 +277,11 @@ export default function Home() {
         <Box my={2}>
           <Typography>{t("rescueForm:platform.which?")}</Typography>
           <RadioGroup value={version} onChange={handleVersionChange}>
+            
             <FormControlLabel
-              value={VersionInput.HORIZONS3}
+              value={VersionInput.ODYSSEY}
               control={<Radio />}
-              label="Elite Dangerous: Horizons"
+              label="Elite Dangerous: Odyssey"
             />
             <FormControlLabel
               value={VersionInput.HORIZONS4}
@@ -288,9 +289,9 @@ export default function Home() {
               label="Elite Dangerous: Horizons (4.0)"
             />
             <FormControlLabel
-              value={VersionInput.ODYSSEY}
+              value={VersionInput.HORIZONS3}
               control={<Radio />}
-              label="Elite Dangerous: Odyssey"
+              label="Elite Dangerous: Horizons"
             />
           </RadioGroup>
         </Box>
