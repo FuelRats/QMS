@@ -290,12 +290,7 @@ export default function Home() {
             <FormControlLabel
               value={VersionInput.HORIZONS3}
               control={<Radio />}
-              label="LEGACY HORIZONS"
-            />
-            <FormControlLabel
-              value={VersionInput.HORIZONS3}
-              control={<Radio />}
-              label="LEGACY ELITE DANGEROUS"
+              label="LEGACY HORIZONS / LEGACY ELITE DANGEROUS"
             />
           </RadioGroup>
         </Box>
