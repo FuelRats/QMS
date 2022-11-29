@@ -280,17 +280,22 @@ export default function Home() {
             <FormControlLabel
               value={VersionInput.ODYSSEY}
               control={<Radio />}
-              label="Elite Dangerous: Odyssey"
+              label="ELITE DANGEROUS: ODYSSEY"
             />
             <FormControlLabel
               value={VersionInput.HORIZONS4}
               control={<Radio />}
-              label="Elite Dangerous: Horizons"
+              label="ELITE DANGEROUS: HORIZONS"
             />
             <FormControlLabel
               value={VersionInput.HORIZONS3}
               control={<Radio />}
-              label="Elite Dangerous (Legacy Mode)"
+              label="LEGACY HORIZONS"
+            />
+            <FormControlLabel
+              value={VersionInput.HORIZONS3}
+              control={<Radio />}
+              label="LEGACY ELITE DANGEROUS"
             />
           </RadioGroup>
         </Box>
