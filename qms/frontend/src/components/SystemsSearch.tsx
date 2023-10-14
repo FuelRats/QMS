@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useMemo } from "react";
 import { useLazyQuery } from "@apollo/client";
 import { gql } from "@apollo/client/core";
 import * as _ from "lodash";
@@ -15,20 +15,14 @@ const SEARCH_SYSTEMS = gql`
 export default function SystemsSearch({ onChange, label }) {
   const [open, setOpen] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState("");
-  const [searchSystems, { loading: queryLoading, data, error }] =
+  const [searchSystems, { loading, data, error }] = 
     useLazyQuery<{ systems: { name: string }[] }>(SEARCH_SYSTEMS);
-  const loadDataDebounced = _.debounce(async () => {
-    if (searchValue.length < 3) {
+  const debounceSearchSystems = useMemo((value: string) => _.debounce(async () => {
+    if (value.length < 3) {
       return;
     }
-    searchSystems({ variables: { search: searchValue } });
-  }, 500);
-
-  const loading = queryLoading;
-
-  useEffect(() => {
-    loadDataDebounced();
-  }, [searchValue]);
+    searchSystems({ variables: { search: value } });
+  }, 500), []);
 
   if (error) {
     return <>Error</>;
@@ -49,6 +43,7 @@ export default function SystemsSearch({ onChange, label }) {
       options={data?.systems ?? []}
       loading={loading}
       onInputChange={(ev, newValue) => {
+        debounceSearchSystems(newValue);
         setSearchValue(newValue);
         onChange(newValue);
       }}
