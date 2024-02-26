@@ -1,0 +1,22 @@
+{
+  "timer?": "Oksijen geri sayımı görüyor musunuz?",
+  "exitAlert": {
+    "title": "MAIN MENU'YE DÖNÜN",
+    "exitInstructions": "Lütfen derhal geminizi hangarda görebildiğiniz ana menüye geri dönün!"
+  },
+  "infoAlert": {
+    "enterGameWarning": "Size söylenmediği sürece lütfen oyuna geri dönmeyin.",
+    "gatherInfo": "Kontrol etmek için oyuna geri dönmeden oksijeninizin ne kadar süresi kaldığını ve sistemde tahmini olarak ne tarafta olduğunuzu yazınız."
+  },
+  "cmdrName": "CMDR ismi",
+  "system": {
+    "systemName": "Sistem ismi",
+    "searchLabel": "Sistem arat"
+  },
+  "platform" : {
+    "odyssey?": "Odyssey'mi oynuyorsunuz?",
+    "which?": "Hangi platformda oynuyorsunuz?",
+    "header": "Platform"
+  },
+  "start": "Başlat"
+}

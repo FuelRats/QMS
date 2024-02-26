@@ -1,0 +1,22 @@
+{
+  "timer?": "您看到一個'oxygen depleted'的倒計時嗎？",
+  "exitAlert": {
+    "title": "退出至主菜单",
+    "exitInstructions": "請立刻退出至主菜單！您將可以在主菜單上看到您的船在機庫裏！"
+  },
+  "infoAlert": {
+    "enterGameWarning": "在您被指示登入前請留在主菜單上",
+    "gatherInfo": "請勿登入游戲確認，寫下在氧氣倒計時上所剩餘的時間和您在星系裏大約的位置。我們在救援時將需要這些資訊。"
+  },
+  "cmdrName": "用戶名",
+  "system": {
+    "systemName": "星系名稱",
+    "searchLabel": "搜尋星系"
+  },
+  "platform" : {
+    "odyssey?": "您是否在游玩Odyssey版本？",
+    "which?": "您在哪個平台上游玩？",
+    "header": "游玩平臺"
+  },
+  "start": "開始"
+}

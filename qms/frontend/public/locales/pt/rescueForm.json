@@ -2,21 +2,21 @@
   "timer?": "Vê um temporizador 'oxigénio de emergência'?",
   "exitAlert": {
     "title": "Por favor saída para o menu principal",
-    "exitInstructions": "Por favor saída para o menu principal  onde vê a sua nave no hangar <strong>imediatamente</strong>!"
+    "exitInstructions": "Por favor saída para o menu principal onde vê a sua nave no hangar imediatamente!"
   },
   "infoAlert": {
     "enterGameWarning": "Não volte a entrar no jogo, a menos que lhe digam isso.",
-    "gatherInfo": "<strong>O NÃO faça login para verificar</strong>, mas anote quanto tempo lhe restava no temporizador de oxigénio e onde se encontrava aproximadamente no sistema. Isto será perguntado durante o salvamento."
+    "gatherInfo": "NÃO faça login para verificar, mas anote quanto tempo lhe restava no temporizador de oxigénio e onde se encontrava aproximadamente no sistema. Isto será perguntado durante o salvamento."
   },
-  "cmdrName": "CMDR Name",
+  "cmdrName": "Nome do CMDR",
   "system": {
     "systemName": "Nome do sistema",
-    "searchLabel": "procura de um sistema"
+    "searchLabel": "Procura de um sistema"
   },
   "platform" : {
     "odyssey?": "Está a jogar na Odyssey?",
-    "which?": "Em que modo está a jogar?",
+    "which?": "Em que plataforma está a jogar?",
     "header": "Plataforma"
   },
-  "start": "Inicio"
+  "start": "Início"
 }

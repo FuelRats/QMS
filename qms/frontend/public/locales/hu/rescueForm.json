@@ -1,0 +1,22 @@
+{
+  "timer?": "Látsz egy 'oxigén kimerül:' visszaszámlálást?",
+  "exitAlert": {
+    "title": "LÉPJ KI A FŐMENÜBE",
+    "exitInstructions": "Azonnal lépj ki a főmenübe ahol a hajódat egy hangárban látod!"
+  },
+  "infoAlert": {
+    "enterGameWarning": "Ne lépj vissza a játékba amíg külön nem kérünk rá.",
+    "gatherInfo": "NE lépj vissza ellenőrizni, de ha emlékszel, írd fel mennyi idő volt az oxigén visszaszámlálón és hogy nagyjából merre voltál a csillagrendszerben. Kérdezni fogjuk a mentés során."
+  },
+  "cmdrName": "CMDR Neve",
+  "system": {
+    "systemName": "Csillagrendszer Neve",
+    "searchLabel": "Rendszer keresés"
+  },
+  "platform" : {
+    "odyssey?": "Az Odyssey kiegészítővel játszol?",
+    "which?": "Melyik platformon játszol?",
+    "header": "Platform"
+  },
+  "start": "Indítás"
+}

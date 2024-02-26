@@ -1,0 +1,13 @@
+{
+  "loading": "Kurtarmanız yükleniyor....",
+  "queueAlert": {
+    "inQueue": "Sıradasınız!",
+    "busy": "Şu anda kurtarma vakaları inanılmaz yoğun.",
+    "refresh": "Sıranız geldiğinde bu ekran otomatik olarak yenilenecek ve sizi içeri alacaktır."
+  },
+  "fuelAlert": {
+    "exit": "Ana Menü'ye dönün",
+    "instructions": "Gereksiz yakıt harcamasını önlemek için, lütfen beklerken geminizi hangarda görebileceğiniz ana menüye dönün."
+  },
+  "position": "Sıralamadaki pozisyonunuz: {{position}}"
+}

@@ -1,0 +1,22 @@
+{
+  "timer?": "Zie je een 'oxygen depleted' klok?",
+  "exitAlert": {
+    "title": "VERLAAT HET SPEL NAAR HET HOOFDMENU",
+    "exitInstructions": "Verlaat aub direct het spel naar het hoofdmenu waar je je schip in de hangar kunt zien!"
+  },
+  "infoAlert": {
+    "enterGameWarning": "Ga niet terug het spel in, tenzij je daar opdracht voor krijgt.",
+    "gatherInfo": "Log NIET in om te checken, maar schrijf op hoeveel tijd er op de zuurstof/oxygen klok stond en waar in het systeem je ongeveer was. Daar wordt naar gevraagd tijdens de reddingsoperatie."
+  },
+  "cmdrName": "CMDR Naam",
+  "system": {
+    "systemName": "Systeemnaam",
+    "searchLabel": "Zoek naar een systeem"
+  },
+  "platform" : {
+    "odyssey?": "Speel je Odyssey?",
+    "which?": "Op welk platform speel je?",
+    "header": "Platform"
+  },
+  "start": "Start"
+}

@@ -1,21 +1,21 @@
 {
-  "timer?": "Vedi un timer con su scritto “OXYGEN DEPLETED”?",
+  "timer?": "Vedi un timer con su scritto 'OXYGEN DEPLETED'?",
   "exitAlert": {
     "title": "Esci al menu principale",
-    "exitInstructions": "Per cortesia, esci al menu principale dove puoi vedere la tua nave nell’hangar <strong>immediatamente!<strong>"
+    "exitInstructions": "Per cortesia, esci al menu principale dove puoi vedere la tua nave nell’hangar immediatamente!"
   },
   "infoAlert": {
     "enterGameWarning": "Non rientrare nel gioco finché non ti viene detto.",
-    "gatherInfo": "<strong>Non rientrare per controllare</strong>, ma annota quanto tempo era rimasto sul timer e dove ti trovavi nel sistema. Ti verrà chiesto durante le operazioni di soccorso."
+    "gatherInfo": "Non rientrare per controllare, ma annota quanto tempo era rimasto sul timer e dove ti trovavi nel sistema. Ti verrà chiesto durante le operazioni di soccorso."
   },
-  "cmdrName": "CMDR Name",
+  "cmdrName": "Nome del CMDR",
   "system": {
     "systemName": "Nome del sistema",
     "searchLabel": "Cerca il sistema"
   },
   "platform" : {
-    "odyssey?": "Stai giocando con Odissey?",
-    "which?": "In quale modalità stai giocando?",
+    "odyssey?": "Stai giocando con Odyssey?",
+    "which?": "Su quale piattaforma stai giocando?",
     "header": "Piattaforma"
   },
   "start": "Inizio"

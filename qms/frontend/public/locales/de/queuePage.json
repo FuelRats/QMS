@@ -7,7 +7,7 @@
   },
   "fuelAlert": {
     "exit": "Gehe ins Hauptmenü",
-    "instructions": "Damit du nicht unnötig Treibstoff verbrauchst gehe bitte ins Hauptmenü, wo du dein Schiff im Hangar siehst während du wartest."
+    "instructions": "Damit du nicht unnötig Treibstoff verbrauchst, gehe bitte ins Hauptmenü, wo du dein Schiff im Hangar siehst, während du wartest."
   },
   "position": "Deine Position in der Warteschlange: {{position}}"
 }

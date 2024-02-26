@@ -15,7 +15,7 @@
   },
   "platform" : {
     "odyssey?": "Spielst du die Odyssey Erweiterung?",
-    "which?": "In welchem Modus spielen Sie?",
+    "which?": "Spielst du in Odyssey?",
     "header": "Platform"
   },
   "start": "Start"

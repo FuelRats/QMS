@@ -1,0 +1,22 @@
+{
+  "timer?": "¿Ve un temporizador de 'Oxigeno Agotado en...?'",
+  "exitAlert": {
+    "title": "Salir al Menú Principal",
+    "exitInstructions": "Por favor, sal inmediatamente al menú principal donde puedes ver tu nave en el Hangar!"
+  },
+  "infoAlert": {
+    "enterGameWarning": "No ingrese al juego hasta que se lo digan.",
+    "gatherInfo": "No ingrese para verificar, pero tome nota de cuanto tiempo de oxígeno le quedaba y donde se encuentra aproximadamente en el sistema. Esto se lo preguntarán durante el rescate."
+  },
+  "cmdrName": "Nombre del CMDR",
+  "system": {
+    "systemName": "Nombre de Sistema",
+    "searchLabel": "Busca por Sistema"
+  },
+  "platform" : {
+    "odyssey?": "¿Estas jugando Odyssey?",
+    "which?": "¿En qué modo estás jugando?",
+    "header": "Plataforma"
+  },
+  "start": "Iniciar"
+}

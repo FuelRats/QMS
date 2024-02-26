@@ -1,0 +1,13 @@
+{
+  "loading": "We laden jouw reddingsoperatie…",
+  "queueAlert": {
+    "inQueue": "Je staat in de wachtrij!",
+    "busy": "Het is op dit moment extreem druk met reddingsoperaties.",
+    "refresh": "Dit scherm ververst automatisch en laat je toe zodra je aan de beurt bent."
+  },
+  "fuelAlert": {
+    "exit": "Verlaat het spel naar het hoofdmenu",
+    "instructions": "Om te voorkomen dat je onnodig brandstof verbruikt, verlaat het spel naar het hoofdmenu waar je je schip in de hangar ziet en wacht daar."
+  },
+  "position": "Jouw positie in de wachtrij: {{position}}"
+}

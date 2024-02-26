@@ -1,0 +1,13 @@
+{
+  "loading": "Betöltés folyamatban…",
+  "queueAlert": {
+    "inQueue": "Várólistán vagy!",
+    "busy": "Jelenleg rengeteg mentésen dolgozunk.",
+    "refresh": "Ez az oldal automatikusan frissülni fog, és belép amikor te jössz."
+  },
+  "fuelAlert": {
+    "exit": "Lépj ki a főmenübe",
+    "instructions": "Az üzemanyagod megőrzéséért amíg itt várakozol, légy szíves lépj ki a főmenübe, ahol a hajódat egy hangárban látod."
+  },
+  "position": "Pozíciód a várólistán: {{position}}"
+}

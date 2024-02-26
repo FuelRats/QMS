@@ -2,8 +2,8 @@
   "loading": "Carregando a sua ajuda...",
   "queueAlert": {
     "inQueue": "Está na Fila de espera!",
-    "busy": "Actualmente está extremamente ocupado com casos de salvamento.",
-    "refresh": "Este ecrã actualiza-se automaticamente e deixa-o entrar assim que for a sua vez."
+    "busy": "Atualmente está extremamente ocupado com casos de salvamento.",
+    "refresh": "Este ecrã atualiza-se automaticamente e deixa-o entrar assim que for a sua vez."
   },
   "fuelAlert": {
     "exit": "Por favor saída para o menu principal",
