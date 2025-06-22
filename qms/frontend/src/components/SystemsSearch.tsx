@@ -15,18 +15,18 @@ const SEARCH_SYSTEMS = gql`
 export default function SystemsSearch({ onChange, label }) {
   const [open, setOpen] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState("");
-  const [searchSystems, { loading, data, error }] = 
+  const [searchSystems, { loading, data, error }] =
     useLazyQuery<{ systems: { name: string }[] }>(SEARCH_SYSTEMS);
-  const debounceSearchSystems = useMemo((value: string) => _.debounce(async () => {
-    if (value.length < 3) {
-      return;
-    }
-    searchSystems({ variables: { search: value } });
-  }, 500), []);
-
-  if (error) {
-    return <>Error</>;
-  }
+  const debounceSearchSystems = useMemo(
+    () =>
+      _.debounce((value: string) => {
+        if (value.length < 3) {
+          return;
+        }
+        searchSystems({ variables: { search: value } });
+      }, 500),
+    [searchSystems] // make sure to include dependencies if needed
+  );
 
   return (
     <Autocomplete
