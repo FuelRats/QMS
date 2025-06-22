@@ -1,13 +1,13 @@
 {
-  "loading": "Carregando a sua ajuda...",
+  "loading": "Carregando o seu resgate…",
   "queueAlert": {
-    "inQueue": "Está na Fila de espera!",
+    "inQueue": "Você está na Fila de Espera!",
     "busy": "Atualmente está extremamente ocupado com casos de salvamento.",
-    "refresh": "Este ecrã atualiza-se automaticamente e deixa-o entrar assim que for a sua vez."
+    "refresh": "Esta tela atualiza-se automaticamente e deixará você entrar assim que for a sua vez."
   },
   "fuelAlert": {
-    "exit": "Por favor saída para o menu principal",
-    "instructions": "Para evitar a queima de combustível desnecessário, por favor saia para o menu principal onde pode ver o seu navio no hangar enquanto espera aqui."
+    "exit": "Por favor saia para o menu principal.",
+    "instructions": "Para evitar a queima de combustível desnecessário, por favor saia para o menu principal onde pode ver a sua nave no hangar enquanto espera aqui."
   },
   "position": "A sua posição na fila de espera: {{position}}"
 }

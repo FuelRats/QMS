@@ -1,22 +1,22 @@
 {
-  "timer?": "Vê um temporizador 'oxigénio de emergência'?",
+  "timer?": "Vê um temporizador 'Oxigênio Esgotado em:’?",
   "exitAlert": {
-    "title": "Por favor saída para o menu principal",
-    "exitInstructions": "Por favor saída para o menu principal onde vê a sua nave no hangar imediatamente!"
+    "title": "Por favor SAIA para o menu principal",
+    "exitInstructions": "Por favor saia para o menu principal aonde pode ver a sua nave no hangar imediatamente!"
   },
   "infoAlert": {
-    "enterGameWarning": "Não volte a entrar no jogo, a menos que lhe digam isso.",
-    "gatherInfo": "NÃO faça login para verificar, mas anote quanto tempo lhe restava no temporizador de oxigénio e onde se encontrava aproximadamente no sistema. Isto será perguntado durante o salvamento."
+    "enterGameWarning": "Não volte a entrar no jogo, a menos que lhe seja dito.",
+    "gatherInfo": "O NÃO faça login para verificar, mas anote quanto tempo lhe restava no temporizador de oxigénio e onde se encontrava aproximadamente no sistema. Isto será perguntado durante o salvamento."
   },
-  "cmdrName": "Nome do CMDR",
+  "cmdrName": "Nome do CMDT",
   "system": {
     "systemName": "Nome do sistema",
-    "searchLabel": "Procura de um sistema"
+    "searchLabel": "Procure por um sistema"
   },
-  "platform" : {
-    "odyssey?": "Está a jogar na Odyssey?",
-    "which?": "Em que plataforma está a jogar?",
-    "header": "Plataforma"
+  "platform": {
+    "odyssey?": "Está jogando no Odyssey?",
+    "which?": "Está jogando no Odyssey?",
+    "header": "plataforma"
   },
-  "start": "Início"
+  "start": "inicio"
 }
