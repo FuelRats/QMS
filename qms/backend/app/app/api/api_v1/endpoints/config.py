@@ -1,4 +1,4 @@
-from typing import Any, List
+from typing import Any, List, Optional
 
 from fastapi import APIRouter, Body, Depends, HTTPException
 from fastapi.encoders import jsonable_encoder
@@ -32,7 +32,7 @@ def get_config(
                           clear_on_restart=current_config.clear_on_restart)
 
 
-@router.put("/", response_model=schemas.Config)
+@router.put("/", response_model=Optional[schemas.Config])
 def set_config(
     db: Session = Depends(deps.get_db),
     skip: int = 0,

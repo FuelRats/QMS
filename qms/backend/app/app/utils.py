@@ -1,5 +1,5 @@
 import logging
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any, Dict, Optional
 
@@ -51,7 +51,7 @@ def send_reset_password_email(email_to: str, email: str, token: str) -> None:
     subject = f"{project_name} - Password recovery for user {email}"
     with open(Path(settings.EMAIL_TEMPLATES_DIR) / "reset_password.html") as f:
         template_str = f.read()
-    server_host = settings.SERVER_HOST
+    server_host = str(settings.SERVER_HOST).rstrip("/")
     link = f"{server_host}/reset-password?token={token}"
     send_email(
         email_to=email_to,
@@ -72,7 +72,7 @@ def send_new_account_email(email_to: str, username: str, password: str) -> None:
     subject = f"{project_name} - New account for user {username}"
     with open(Path(settings.EMAIL_TEMPLATES_DIR) / "new_account.html") as f:
         template_str = f.read()
-    link = settings.SERVER_HOST
+    link = str(settings.SERVER_HOST).rstrip("/")
     send_email(
         email_to=email_to,
         subject_template=subject,
@@ -89,7 +89,7 @@ def send_new_account_email(email_to: str, username: str, password: str) -> None:
 
 def generate_password_reset_token(email: str) -> str:
     delta = timedelta(hours=settings.EMAIL_RESET_TOKEN_EXPIRE_HOURS)
-    now = datetime.utcnow()
+    now = datetime.now(UTC)
     expires = now + delta
     exp = expires.timestamp()
     encoded_jwt = jwt.encode(
@@ -107,10 +107,13 @@ def verify_password_reset_token(token: str) -> Optional[str]:
 
 
 def api_query(endpoint: str, filter: str, query: str) -> Optional[str]:
+    headers = {}
+    if settings.FRAPI_TOKEN:
+        headers['Authorization'] = f'Bearer {settings.FRAPI_TOKEN}'
     try:
         query = requests.get(url=urllib.parse.urljoin(settings.FRAPI_URL, f"{endpoint}"),
                              params={f'filter[{filter}]': f'{query}'},
-                             headers={'Authorization': f'Bearer {settings.FRAPI_TOKEN}'})
+                             headers=headers)
         if query.status_code != 200:
             query.raise_for_status()
         return query.json()

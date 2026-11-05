@@ -94,7 +94,7 @@ def update_queue(
         if not item:
             raise HTTPException(status_code=404, detail="UUID found, but no matching queue data")
         if queue_in.pending == True and item.pending == False:
-            item.dequeued_at = datetime.datetime.utcnow()
+            item.dequeued_at = datetime.datetime.now(datetime.UTC)
         item = crud.queue.update(db=db, db_obj=item, obj_in=queue_in)
         client = crud.client.update(db=db, db_obj=item.client, obj_in=queue_in.client)
         db.refresh(item)
@@ -123,13 +123,14 @@ def remove_queue(
             raise HTTPException(status_code=404, detail="UUID not found")
         client = db.query(Client).filter(Client.id == row.client.id).one()
         stat_queue = Statistics(uuid=row.uuid, arrival_time=row.arrival_time, dequeued_at=row.dequeued_at,
-                                deleted_at=datetime.datetime.utcnow(), purged=False)
+                                deleted_at=datetime.datetime.now(datetime.UTC),
+                                purged=False)
         db.add(stat_queue)
         db.commit()
         crud.client.remove(db=db, id=client.id)
         crud.queue.remove(db=db, id=row.id)
-        old_queue = db.query(Queue).filter(Queue.arrival_time <=
-                                           (datetime.datetime.utcnow()-datetime.timedelta(hours=24)))
+        day_ago = datetime.datetime.now(datetime.UTC) - datetime.timedelta(hours=24)
+        old_queue = db.query(Queue).filter(Queue.arrival_time <= day_ago)
         if old_queue.count() >= 1:
             celery_app.send_task("app.worker.clean_queue", args=["Cleanup started by stale cases."])
         return {'status': f'Success!'}
@@ -152,7 +153,7 @@ def api_dequeue(
     if not row:
         raise HTTPException(status_code=204, detail="No valid cases to dequeue")
     row.pending = True
-    row.dequeued_at = datetime.datetime.utcnow()
+    row.dequeued_at = datetime.datetime.now(datetime.UTC)
     db.commit()
     return row
 
@@ -196,7 +197,7 @@ def new_client(
     else:
         queue = crud.queue.create(db, obj_in=client_in)
         queue.pending = True
-        queue.dequeued_at = datetime.datetime.utcnow()
+        queue.dequeued_at = datetime.datetime.now(datetime.UTC)
         db.commit()
         res = {'message': 'go_ahead', 'uuid': queue.uuid, 'arrival_time': queue.arrival_time,
                'client': queue.client}
@@ -279,5 +280,8 @@ def get_statistics(
                                   average_queuetime=queue_time, average_rescuetime=rescue_time,
                                   longest_rescuetime=max_rescue_time, longest_queuetime=max_queue_time,
                                   lost_queues=lost_queues, successful_queues=loiterers)
-    else:
-        return detail_view
+    if not detail_view:
+        # A detailed query that matches nothing answers with an all-null summary
+        # object rather than an empty list.
+        return schemas.Statistics()
+    return detail_view
