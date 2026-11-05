@@ -1,5 +1,5 @@
 import uuid
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import List, Union, Dict, Any
 
 from fastapi.encoders import jsonable_encoder
@@ -25,7 +25,7 @@ class CRUDQueue(CRUDBase[Queue, QueueCreate, QueueUpdate]):
         db.commit()
         db.refresh(client_obj)
         db_obj = Queue(client=client_obj,
-                       arrival_time=datetime.utcnow(),
+                       arrival_time=datetime.now(UTC),
                        uuid=str(uuid.uuid4()),
                        pending=False,
                        in_progress=False)
@@ -55,7 +55,7 @@ class CRUDQueue(CRUDBase[Queue, QueueCreate, QueueUpdate]):
         if isinstance(obj_in, dict):
             update_data = obj_in
         else:
-            update_data = obj_in.dict(exclude_unset=True)
+            update_data = obj_in.model_dump(exclude_unset=True)
         return super().update(db, db_obj=db_obj, obj_in=update_data)
 
 

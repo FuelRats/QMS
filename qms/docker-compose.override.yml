@@ -47,7 +47,6 @@ services:
     volumes:
       - ./backend/app:/app
     environment:
-      - JUPYTER=jupyter lab --ip=0.0.0.0 --allow-root --NotebookApp.custom_display_url=http://127.0.0.1:8888
       - SERVER_HOST=http://${DOMAIN?Variable not set}
       - LOG_LEVEL=debug
     build:
@@ -55,7 +54,6 @@ services:
       dockerfile: backend.dockerfile
       args:
         INSTALL_DEV: ${INSTALL_DEV-true}
-        INSTALL_JUPYTER: ${INSTALL_JUPYTER-true}
     # command: bash -c "while true; do sleep 1; done"  # Infinite loop to keep container live doing nothing
     command: /start-reload.sh
     labels:
@@ -68,15 +66,13 @@ services:
     volumes:
       - ./backend/app:/app
     environment:
-      - RUN=celery worker -A app.worker -l info -Q main-queue -c 1
-      - JUPYTER=jupyter lab --ip=0.0.0.0 --allow-root --NotebookApp.custom_display_url=http://127.0.0.1:8888
+      - RUN=celery -A app.worker worker -l info -Q main-queue -c 1
       - SERVER_HOST=http://${DOMAIN?Variable not set}
     build:
       context: ./backend
       dockerfile: celeryworker.dockerfile
       args:
         INSTALL_DEV: ${INSTALL_DEV-true}
-        INSTALL_JUPYTER: ${INSTALL_JUPYTER-true}
 
   frontend:
     build:

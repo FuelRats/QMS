@@ -24,10 +24,10 @@ class ConfigCreate(ConfigBase):
 
 # Properties to receive on item update
 class ConfigUpdate(ConfigBase):
-    max_active_clients: Optional[int]
-    clear_on_restart: Optional[bool]
-    prioritize_cr: Optional[bool]
-    prioritize_non_cr: Optional[bool]
+    max_active_clients: Optional[int] = None
+    clear_on_restart: Optional[bool] = None
+    prioritize_cr: Optional[bool] = None
+    prioritize_non_cr: Optional[bool] = None
 
 
 # Properties shared by models stored in DB
