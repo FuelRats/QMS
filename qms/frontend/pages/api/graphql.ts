@@ -69,6 +69,11 @@ const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
   plugins,
+  // The exception extension copies the axios request config, Authorization header included.
+  formatError: (error) => {
+    delete error.extensions?.exception;
+    return error;
+  },
 });
 
 export const config = {
