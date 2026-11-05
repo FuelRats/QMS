@@ -4,7 +4,7 @@ import { useQuery } from "@apollo/client";
 import Image from "next/image";
 import React from "react";
 import pushClientToKiwi from "../../../src/helpers/PushClientToKiwi";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { serverSideTranslations } from "next-i18next/pages/serverSideTranslations";
 import { useTranslation } from "react-i18next";
 import * as Sentry from "@sentry/nextjs";
 import {
@@ -124,10 +124,17 @@ export default function Index() {
 
   return (
     <Container maxWidth="xs">
-      <Box my={2} display="flex" justifyContent="center" alignItems="center">
-        <Image src="/logo.svg" layout="fixed" width={250} height={250} />
+      <Box
+        sx={{
+          my: 2,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Image src="/logo.svg" width={250} height={250} alt="Fuel Rats logo" />
       </Box>
-      <Box my={2}>
+      <Box sx={{ my: 2 }}>
         <Alert severity="info">
           <AlertTitle>
             <strong>{t("queuePage:queueAlert.inQueue")}</strong>
@@ -137,7 +144,7 @@ export default function Index() {
           {t("queuePage:queueAlert.refresh")}
         </Alert>
       </Box>
-      <Box my={2}>
+      <Box sx={{ my: 2 }}>
         <Alert severity="warning">
           <AlertTitle>
             <strong>{t("queuePage:fuelAlert.exit")}</strong>
@@ -148,7 +155,7 @@ export default function Index() {
       <Typography variant="h5" component="h3">
         {t("queuePage:position", { position: data.queuedClient.position })}
       </Typography>
-      <Box width="100%" my={2}>
+      <Box sx={{ width: "100%", my: 2 }}>
         <LinearProgress />
       </Box>
     </Container>

@@ -12,6 +12,10 @@ const SEARCH_SYSTEMS = gql`
   }
 `;
 
+// Free-solo values are plain strings, which have no name.
+const systemName = (option: { name: string } | string): string | undefined =>
+  typeof option === "string" ? undefined : option.name;
+
 export default function SystemsSearch({ onChange, label }) {
   const [open, setOpen] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState("");
@@ -38,8 +42,10 @@ export default function SystemsSearch({ onChange, label }) {
       onClose={() => {
         setOpen(false);
       }}
-      isOptionEqualToValue={(option, newValue) => option.name === newValue.name}
-      getOptionLabel={(option) => option.name ?? searchValue}
+      isOptionEqualToValue={(option, newValue) =>
+        option.name === systemName(newValue)
+      }
+      getOptionLabel={(option) => systemName(option) ?? searchValue}
       options={data?.systems ?? []}
       loading={loading}
       onInputChange={(ev, newValue) => {
@@ -54,19 +60,23 @@ export default function SystemsSearch({ onChange, label }) {
           {...params}
           placeholder={label ?? "Search for a system"}
           variant="outlined"
-          InputLabelProps={{
-            shrink: true,
-          }}
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <React.Fragment>
-                {loading ? (
-                  <CircularProgress color="inherit" size={20} />
-                ) : null}
-                {params.InputProps.endAdornment}
-              </React.Fragment>
-            ),
+          slotProps={{
+            ...params.slotProps,
+            inputLabel: {
+              ...params.slotProps.inputLabel,
+              shrink: true,
+            },
+            input: {
+              ...params.slotProps.input,
+              endAdornment: (
+                <React.Fragment>
+                  {loading ? (
+                    <CircularProgress color="inherit" size={20} />
+                  ) : null}
+                  {params.slotProps.input.endAdornment}
+                </React.Fragment>
+              ),
+            },
           }}
         />
       )}

@@ -1,10 +1,10 @@
-import { ApolloServer } from "apollo-server-micro";
+import { ApolloServer } from "@apollo/server";
+import { startServerAndCreateNextHandler } from "@as-integrations/next";
 import { typeDefs } from "./schema";
 import systems from "./SystemsResolver";
 import queueClient from "./QueueClientMutation";
 import queuedClient from "./QueuedClientResolver";
 import queuedClients from "./QueuedClientsResolver";
-import { withSentry } from "@sentry/nextjs";
 import * as Sentry from "@sentry/nextjs";
 import { ApolloError } from "@apollo/client";
 
@@ -22,9 +22,9 @@ const resolvers = {
 const plugins = [];
 if (process.env.SENTRY_SERVER_DSN) {
   plugins.push({
-    requestDidStart(requestContext) {
+    async requestDidStart() {
       return {
-        didEncounterErrors(ctx) {
+        async didEncounterErrors(ctx) {
           // If we couldn't parse the operation, don't
           // do anything here
           if (!ctx.operation) {
@@ -52,7 +52,7 @@ if (process.env.SENTRY_SERVER_DSN) {
                 scope.addBreadcrumb({
                   category: "query-path",
                   message: err.path.join(" > "),
-                  level: Sentry.Severity.Debug,
+                  level: "debug",
                 });
               }
 
@@ -69,12 +69,13 @@ const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
   plugins,
+  // Error responses carry only message, locations, path and extensions.code:
+  // resolver errors wrap axios errors whose request config holds the
+  // backend's bearer token.
+  includeStacktraceInErrorResponses: false,
 });
 
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
-export default withSentry(apolloServer.createHandler({ path: "/api/graphql" }));
+export default Sentry.wrapApiHandlerWithSentry(
+  startServerAndCreateNextHandler(apolloServer),
+  "/api/graphql"
+);
