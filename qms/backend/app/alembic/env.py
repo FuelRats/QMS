@@ -1,6 +1,7 @@
 from __future__ import with_statement
 
 import os
+from urllib.parse import quote
 
 from alembic import context
 from sqlalchemy import engine_from_config, pool
@@ -32,7 +33,7 @@ target_metadata = Base.metadata
 
 def get_url():
     user = os.getenv("POSTGRES_USER", "postgres")
-    password = os.getenv("POSTGRES_PASSWORD", "")
+    password = quote(os.getenv("POSTGRES_PASSWORD", ""), safe="")
     server = os.getenv("POSTGRES_SERVER", "db")
     db = os.getenv("POSTGRES_DB", "app")
     return f"postgresql+psycopg2://{user}:{password}@{server}/{db}"

@@ -1,5 +1,6 @@
 import secrets
 from typing import Any, List, Optional, Union
+from urllib.parse import quote
 
 from pydantic import (
     AnyHttpUrl,
@@ -58,7 +59,8 @@ class Settings(BaseSettings):
         return PostgresDsn.build(
             scheme="postgresql+psycopg2",
             username=info.data.get("POSTGRES_USER"),
-            password=info.data.get("POSTGRES_PASSWORD"),
+            # pydantic does not percent-encode credentials, and the password may hold URL syntax
+            password=quote(info.data.get("POSTGRES_PASSWORD") or "", safe=""),
             host=info.data.get("POSTGRES_SERVER"),
             path=info.data.get("POSTGRES_DB") or "",
         )
