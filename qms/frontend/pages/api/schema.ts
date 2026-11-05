@@ -29,10 +29,11 @@ export const typeDefs = gql`
     XB
   }
 
+  # Values are the game mode strings the QMS backend and MechaSqueak use.
   enum Version {
-    HORIZONS3
-    HORIZONS4
-    ODYSSEY
+    horizons3
+    horizons4
+    odyssey
   }
 
   input QueueClientInput {

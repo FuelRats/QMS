@@ -41,7 +41,7 @@ const QUEUED_CLIENT_FIND_UUID = gql`
       system
       cmdr
       codeRed
-      odyssey
+      version
     }
   }
 `;
@@ -143,7 +143,8 @@ export default function Home() {
       platform,
       locale: navigator.language,
       codeRed: codeRed === EmptyBoolean.TRUE,
-      version: version,
+      // Consoles only run Horizons 3.8.
+      version: platform === "PC" ? version : VersionInput.HORIZONS3,
       system: system,
     };
     localStorage.setItem(

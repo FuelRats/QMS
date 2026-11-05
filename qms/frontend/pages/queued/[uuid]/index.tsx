@@ -24,7 +24,7 @@ const GET_QUEUED_CLIENT = gql`
       system
       cmdr
       codeRed
-      odyssey
+      version
       position
     }
   }
@@ -60,7 +60,7 @@ export default function Index() {
       platform: data.queuedClient.platform,
       cmdr: data.queuedClient.cmdr,
       timer: data.queuedClient.codeRed,
-      odyssey: data.queuedClient.odyssey,
+      odyssey: data.queuedClient.version,
       submit: true,
       time: Date.now(),
     });
@@ -103,7 +103,7 @@ export default function Index() {
         platform: lastInput.input.platform,
         cmdr: lastInput.input.cmdr,
         timer: lastInput.input.codeRed,
-        odyssey: lastInput.input.odyssey,
+        odyssey: lastInput.input.version,
         submit: true,
         time: Date.now(),
       });
