@@ -21,6 +21,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     command:
       - --entrypoints.http.address=:80
+      - --entrypoints.http.http.aliasheadersstrategy=delete
       - --providers.docker
       - --providers.docker.constraints=Label(`traefik.constraint-label-stack`, `${TRAEFIK_TAG?Variable not set}`)
       - --providers.docker.exposedbydefault=false
