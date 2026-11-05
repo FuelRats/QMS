@@ -1,0 +1,103 @@
+# Production settings for a single Docker host behind nginx, used instead of
+# docker-compose.override.yml (which is for local development):
+#
+#   COMPOSE_FILE=docker-compose.yml:docker-compose.production.yml
+#
+# nginx terminates TLS for qms.<domain>, api.qms.<domain> and flower.qms.<domain>
+# and forwards them to Traefik on 127.0.0.1:8050. pgAdmin only starts with
+# COMPOSE_PROFILES=tools.
+#
+# Every Python and Node service mounts the host trust store, from which the
+# emSign ECC Root CA - G3 has been removed.
+
+services:
+
+  proxy:
+    image: traefik:v3.7
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8050:80"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command:
+      - --entrypoints.http.address=:80
+      - --providers.docker
+      - --providers.docker.constraints=Label(`traefik.constraint-label-stack`, `${TRAEFIK_TAG?Variable not set}`)
+      - --providers.docker.exposedbydefault=false
+      - --accesslog
+      - --log.level=INFO
+
+  db:
+    image: postgres:17
+    restart: unless-stopped
+    volumes:
+      - app-db-data-17:/var/lib/postgresql/data/pgdata
+
+  pgadmin:
+    image: dpage/pgadmin4:9.19
+    restart: unless-stopped
+    profiles:
+      - tools
+    environment:
+      - REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+      - SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+    volumes:
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+
+  queue:
+    image: rabbitmq:4.4-alpine
+    restart: unless-stopped
+
+  flower:
+    image: mher/flower:2.2
+    restart: unless-stopped
+    command:
+      - celery
+      - --broker=amqp://guest@queue:5672//
+      - flower
+    labels:
+      - traefik.enable=true
+      - traefik.constraint-label-stack=${TRAEFIK_TAG?Variable not set}
+      - traefik.http.routers.${STACK_NAME?Variable not set}-flower-http.rule=Host(`flower.${DOMAIN?Variable not set}`)
+      - traefik.http.services.${STACK_NAME?Variable not set}-flower.loadbalancer.server.port=5555
+
+  backend:
+    restart: unless-stopped
+    command: /start.sh
+    environment:
+      - REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+      - SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+    volumes:
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+    labels:
+      - traefik.enable=true
+      - traefik.constraint-label-stack=${TRAEFIK_TAG?Variable not set}
+      - traefik.http.routers.${STACK_NAME?Variable not set}-backend-http.rule=Host(`api.${DOMAIN?Variable not set}`)
+      - traefik.http.services.${STACK_NAME?Variable not set}-backend.loadbalancer.server.port=80
+
+  celeryworker:
+    restart: unless-stopped
+    environment:
+      - REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+      - SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+    volumes:
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+
+  frontend:
+    restart: unless-stopped
+    environment:
+      - NODE_USE_SYSTEM_CA=1
+    volumes:
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+    labels:
+      - traefik.enable=true
+      - traefik.constraint-label-stack=${TRAEFIK_TAG?Variable not set}
+      - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-http.rule=Host(`${DOMAIN?Variable not set}`)
+      - traefik.http.services.${STACK_NAME?Variable not set}-frontend.loadbalancer.server.port=3000
+
+volumes:
+  app-db-data-17:
+
+networks:
+  traefik-public:
+    external: false
