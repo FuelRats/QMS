@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import pushClientToKiwi from "../src/helpers/PushClientToKiwi";
 import { Trans, useTranslation } from "react-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { serverSideTranslations } from "next-i18next/pages/serverSideTranslations";
 import {
   Alert,
   AlertTitle,
@@ -41,7 +41,7 @@ const QUEUED_CLIENT_FIND_UUID = gql`
       system
       cmdr
       codeRed
-      odyssey
+      version
     }
   }
 `;
@@ -143,7 +143,8 @@ export default function Home() {
       platform,
       locale: navigator.language,
       codeRed: codeRed === EmptyBoolean.TRUE,
-      version: version,
+      // Consoles only run Horizons 3.8.
+      version: platform === "PC" ? version : VersionInput.HORIZONS3,
       system: system,
     };
     localStorage.setItem(
@@ -186,10 +187,16 @@ export default function Home() {
 
   return (
     <Container maxWidth="xs">
-      <Box my={2} display="flex" justifyContent="center" alignItems="center">
+      <Box
+        sx={{
+          my: 2,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <Image
           src="/logo.svg"
-          layout="fixed"
           width={250}
           height={250}
           alt="Fuel Rats logo"
@@ -217,7 +224,7 @@ export default function Home() {
       </RadioGroup>
       {codeRed === EmptyBoolean.TRUE && (
         <>
-          <Box my={2}>
+          <Box sx={{ my: 2 }}>
             <Alert severity="error">
               <AlertTitle>
                 {t("rescueForm:exitAlert.title").toUpperCase()}
@@ -228,7 +235,7 @@ export default function Home() {
               />
             </Alert>
           </Box>
-          <Box my={2}>
+          <Box sx={{ my: 2 }}>
             <Alert severity="warning">
               {t("rescueForm:infoAlert.enterGameWarning")}
               <br />
@@ -242,7 +249,7 @@ export default function Home() {
         </>
       )}
 
-      <Box my={2}>
+      <Box sx={{ my: 2 }}>
         <Typography>{t("rescueForm:cmdrName")}</Typography>
         <TextField
           placeholder="Surly Badger"
@@ -253,7 +260,7 @@ export default function Home() {
         />
       </Box>
 
-      <Box my={2}>
+      <Box sx={{ my: 2 }}>
         <Typography>{t("rescueForm:system.systemName")}</Typography>
         <SystemsSearch
           onChange={handleSystemChange}
@@ -274,7 +281,7 @@ export default function Home() {
       </RadioGroup>
 
       {platform === "PC" && (
-        <Box my={2}>
+        <Box sx={{ my: 2 }}>
           <Typography>{t("rescueForm:platform.which?")}</Typography>
           <RadioGroup value={version} onChange={handleVersionChange}>
             <FormControlLabel
@@ -302,7 +309,7 @@ export default function Home() {
         </Box>
       )}
 
-      <Box my={4}>
+      <Box sx={{ my: 4 }}>
         <Button
           variant="contained"
           onClick={onSubmit}
