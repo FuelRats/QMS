@@ -8,7 +8,7 @@ class Client(Base):
     id = Column(Integer, primary_key=True, index=True)
     client_name = Column(String, index=True)
     client_system = Column(String)
-    odyssey = Column(Enum('odyssey', 'horizons3', 'horizons4'))
+    odyssey = Column(Enum('odyssey', 'horizons3', 'horizons4', name='gamemode'))
     platform = Column(String)
     locale = Column(String)
     o2_status = Column(Boolean)
