@@ -33,6 +33,8 @@ def clean_queue(msg: str) -> str:
         db.add(stat_queue)
         counter += 1
         db.delete(row)
+        if row.client is not None:
+            db.delete(row.client)
     timeout = datetime.datetime.now(datetime.UTC) - datetime.timedelta(minutes=60*24)
     very_old_queue = db.query(Queue).filter(Queue.arrival_time <= timeout)
     for row in very_old_queue:
@@ -43,6 +45,8 @@ def clean_queue(msg: str) -> str:
         db.add(stat_queue)
         counter += 1
         db.delete(row)
+        if row.client is not None:
+            db.delete(row.client)
     db.commit()
     return f"Queue cleaned, {counter} entries removed."
 
