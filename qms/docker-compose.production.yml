@@ -50,7 +50,10 @@ services:
     restart: unless-stopped
 
   flower:
-    image: mher/flower:2.2
+    image: qms-flower:2.2
+    build:
+      context: ./flower
+      pull: true
     restart: unless-stopped
     command:
       - celery
