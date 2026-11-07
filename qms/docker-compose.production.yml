@@ -7,6 +7,9 @@
 # and forwards them to Traefik on 127.0.0.1:8050. pgAdmin only starts with
 # COMPOSE_PROFILES=tools.
 #
+# docker-compose.yml's deploy.restart_policy (on-failure) would win over restart:
+# and leave cleanly stopped containers down after a host reboot, so it is reset here.
+#
 # Every Python and Node service mounts the host trust store, from which the
 # emSign ECC Root CA - G3 has been removed.
 
@@ -15,6 +18,8 @@ services:
   proxy:
     image: traefik:v3.7
     restart: unless-stopped
+    deploy:
+      restart_policy: !reset null
     ports:
       - "127.0.0.1:8050:80"
     volumes:
@@ -31,12 +36,16 @@ services:
   db:
     image: postgres:17
     restart: unless-stopped
+    deploy:
+      restart_policy: !reset null
     volumes:
       - app-db-data-17:/var/lib/postgresql/data/pgdata
 
   pgadmin:
     image: dpage/pgadmin4:9.19
     restart: unless-stopped
+    deploy:
+      restart_policy: !reset null
     profiles:
       - tools
     environment:
@@ -55,6 +64,8 @@ services:
       context: ./flower
       pull: true
     restart: unless-stopped
+    deploy:
+      restart_policy: !reset null
     command:
       - celery
       - --broker=amqp://guest@queue:5672//
@@ -67,6 +78,8 @@ services:
 
   backend:
     restart: unless-stopped
+    deploy:
+      restart_policy: !reset null
     command: /start.sh
     environment:
       - REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
@@ -81,6 +94,8 @@ services:
 
   celeryworker:
     restart: unless-stopped
+    deploy:
+      restart_policy: !reset null
     environment:
       - REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
       - SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
@@ -89,6 +104,8 @@ services:
 
   frontend:
     restart: unless-stopped
+    deploy:
+      restart_policy: !reset null
     environment:
       - NODE_USE_SYSTEM_CA=1
     volumes:
