@@ -16,7 +16,10 @@
 services:
 
   proxy:
-    image: traefik:v3.7
+    image: qms-traefik:v3.7
+    build:
+      context: ./proxy
+      pull: true
     restart: unless-stopped
     deploy:
       restart_policy: !reset null
