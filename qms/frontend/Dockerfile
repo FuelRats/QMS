@@ -22,6 +22,12 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 
+# The server runs with plain node, so the package managers and their bundled
+# dependencies are left out of the final image.
+RUN apk upgrade --no-cache \
+    && rm -rf /usr/local/lib/node_modules /usr/local/bin/npm /usr/local/bin/npx \
+        /usr/local/bin/corepack /usr/local/bin/yarn /usr/local/bin/yarnpkg /opt/yarn-*
+
 RUN addgroup -g 1001 -S nodejs
 RUN adduser -S nextjs -u 1001
 
