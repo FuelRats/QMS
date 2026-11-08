@@ -1,5 +1,10 @@
 FROM python:3.12-slim
 
+# Debian security fixes that reach trixie-security before the base image is rebuilt
+RUN apt-get update \
+ && DEBIAN_FRONTEND=noninteractive apt-get -y upgrade \
+ && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app/
 
 # Install Poetry
